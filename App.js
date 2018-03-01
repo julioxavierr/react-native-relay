@@ -1,13 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, FlatList, View, Text} from 'react-native';
 
 export default class App extends React.Component {
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+        <FlatList
+          data={[
+            {key: 'Post1'},
+            {key: 'Post2'},
+            {key: 'Post3'},
+            {key: 'Post4'},
+            {key: 'Post5'},
+            {key: 'Post6'},
+            {key: 'Post7'},
+            {key: 'Post8'},
+          ]}
+          renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
+        />
       </View>
     );
   }
@@ -15,9 +26,12 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+   flex: 1,
+   paddingTop: 22
   },
-});
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+})
