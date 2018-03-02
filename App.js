@@ -9,11 +9,14 @@ export default class App extends React.Component {
    * @param {object} rowData 
    */
   _renderRowView(rowData) {
-    return (<TouchableHighlight style={styles.row} 
+    return (<View>
+            <TouchableHighlight style={styles.row} 
               underlayColor='#EEE'
               onPress={() => console.log(rowData.node.description + ' pressed')}>
               <Text>{rowData.node.description}</Text>
-            </TouchableHighlight>)
+            </TouchableHighlight>
+            <View style={styles.line} />
+            </View>)
   }
   
   render() {
@@ -57,5 +60,9 @@ const styles = StyleSheet.create({
   row: {
     padding: 10,
     height: 44
+  },
+  line: {
+    backgroundColor:'#CCC',
+    height: 1
   },
 })
