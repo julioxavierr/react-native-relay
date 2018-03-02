@@ -2,6 +2,14 @@ import React from 'react';
 import { StyleSheet, FlatList, View, Text} from 'react-native';
 
 export default class App extends React.Component {
+
+  /**
+   * Render a row
+   * @param {object} rowData 
+   */
+  _renderRowView(rowData) {
+    return <Text style={styles.item}>{rowData.node.description}</Text>
+  }
   
   render() {
     mockData = [
@@ -24,7 +32,7 @@ export default class App extends React.Component {
         <FlatList
           data={mockData}
           keyExtractor={(item) => item.node.id}
-          renderItem={({item}) => <Text style={styles.item}>{item.node.description}</Text>}
+          renderItem={({item}) => this._renderRowView(item)}
         />
       </View>
     );
