@@ -3,7 +3,7 @@ import { StyleSheet, FlatList, View, Text, TouchableHighlight } from 'react-nati
 import { withNavigation } from 'react-navigation';
 
 @withNavigation
-export default class PostList extends Component {
+export default class RepoList extends Component {
 
 
     static navigationOptions = {title: 'List'};

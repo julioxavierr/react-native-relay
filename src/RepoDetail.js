@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { View, Text, StyleSheet} from 'react-native';
 
-export default class PostDetail extends Component {
+export default class RepoDetail extends Component {
 
 
     static navigationOptions = {title: 'Detail'};

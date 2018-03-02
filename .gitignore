@@ -66,3 +66,6 @@ node_modules
 /third-party
 
 .expo/
+
+/android/
+/ios/
