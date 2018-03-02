@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, FlatList, View, Text} from 'react-native';
+import { StyleSheet, FlatList, View, Text, TouchableHighlight } from 'react-native';
+import { upperCase } from 'change-case';
 
 export default class App extends React.Component {
 
@@ -8,7 +9,11 @@ export default class App extends React.Component {
    * @param {object} rowData 
    */
   _renderRowView(rowData) {
-    return <Text style={styles.item}>{rowData.node.description}</Text>
+    return (<TouchableHighlight style={styles.row} 
+              underlayColor='#EEE'
+              onPress={() => console.log(rowData.node.description + ' pressed')}>
+              <Text>{rowData.node.description}</Text>
+            </TouchableHighlight>)
   }
   
   render() {
@@ -49,9 +54,8 @@ const styles = StyleSheet.create({
     height: 64,
     backgroundColor: '#51103D'
   },
-  item: {
+  row: {
     padding: 10,
-    fontSize: 18,
-    height: 44,
+    height: 44
   },
 })
