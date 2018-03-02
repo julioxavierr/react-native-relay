@@ -1,4 +1,0 @@
-#Fri Mar 02 16:37:27 BRT 2018
-base.0=/Users/julioxavier/Documents/Estudos/Software/Projetos/entria-challenge/android/app/build/intermediates/transforms/dex/debug/folders/1000/1f/main
-renamed.0=classes.dex
-file.0=/Users/julioxavier/Documents/Estudos/Software/Projetos/entria-challenge/android/app/build/intermediates/transforms/dex/debug/folders/1000/1f/main/classes.dex
