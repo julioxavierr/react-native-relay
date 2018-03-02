@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import { View, Text, StyleSheet} from 'react-native';
+import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
+import hoistStatics from 'hoist-non-react-statics';
+import environment from './Environment';
 
-export default class RepoDetail extends Component {
+class RepoDetail extends Component {
 
 
     static navigationOptions = {title: 'Detail'};
@@ -9,10 +12,40 @@ export default class RepoDetail extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>{this.props.navigation.state.params.id}</Text>
+                <Text>{this.props.query.id}</Text>
             </View>
         );
     }
+}
+
+const RepoDetailContainer = createFragmentContainer(RepoDetail, graphql`
+fragment RepoDetail_repository on Repository {
+    id
+    name
+    owner {
+        login
+        avatarUrl
+    }
+    description
+    url
+}
+`)
+
+const RepoDetailQueryRenderer = ({ navigation }) => {
+    return (
+        <QueryRenderer environment={environment}
+            query={graphql`
+                query RepoDetailQuery($id: ID!){
+                    ...RepoDetail_repository
+                }`} variables={{id: navigation.state.params.id}}
+                render={({error, props}) => {
+                    if (props) {
+                        return <RepoDetailContainer query={props} />
+                    } else {
+                        <Text>Loading...</Text>
+                    }
+                }} />
+    )
 }
 
 const styles = StyleSheet.create({
@@ -20,4 +53,17 @@ const styles = StyleSheet.create({
    flex: 1,
    backgroundColor: '#FFF'
   }
-})
+});
+
+export default createFragmentContainer(RepoDetail, graphql`
+    fragment RepoDetail_repository on Repository {
+        id
+        name
+        owner {
+            login
+            avatarUrl
+        }
+        description
+        url
+    }
+`)

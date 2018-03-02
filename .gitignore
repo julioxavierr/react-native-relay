@@ -67,5 +67,6 @@ node_modules
 
 .expo/
 
+# Just for a while
 /android/
 /ios/

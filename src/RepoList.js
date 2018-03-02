@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import { StyleSheet, FlatList, View, Text, TouchableHighlight } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
+import hoistStatics from 'hoist-non-react-statics';
+import environment from './Environment';
 
 @withNavigation
-export default class RepoList extends Component {
+class RepoList extends Component {
 
 
     static navigationOptions = {title: 'List'};
@@ -21,7 +24,7 @@ export default class RepoList extends Component {
                 <TouchableHighlight style={styles.row} 
                     underlayColor='#EEE'
                     onPress={() => this._onPressRow(rowData)}>
-                    <Text>{rowData.node.description}</Text>
+                    <Text>{rowData.node.name}</Text>
                 </TouchableHighlight>
                 <View style={styles.line} />
                 </View>)
@@ -29,33 +32,48 @@ export default class RepoList extends Component {
 
     render() {
         this.navigation = this.props.navigation;
-
-        mockData = [
-            {
-            node: {
-                id: 1,
-                description: 'Post 1'
-            }
-            },
-            {
-            node: {
-                id: 2,
-                description: 'Post 2'
-            }
-            }
-        ];
-
+        
         return (
             <View style={styles.container}>
             <FlatList
-                data={mockData}
-                keyExtractor={(item) => item.node.id}
+                data={this.props.viewer.allPosts.edges}
+                keyExtractor={(item) => item.node.__id}
                 renderItem={({item}) => this._renderRowView(item)}
             />
             </View>
         );
     }
 }
+
+const RepoListContainer = createFragmentContainer(RepoList, graphql`
+    fragment RepoList_viewer on Viewer {
+        repositories(last: 30) @connection(key: "RepoList_repositories", filters: []){
+            edges {
+                node {
+                    ...RepoDetail_repository
+                }
+            }
+        }
+    }
+`)
+
+const RepoListQueryRenderer = () => {
+    return (<QueryRenderer environment={environment}
+        query={graphql`
+            query RepoListQuery {
+                ...RepoList_viewer
+            }
+        `}
+        render={({error, props}) => {
+            if (props) {
+                return <RepoListContainer/>
+            } else {
+                return (<Text>Loading...</Text>);
+            }
+        }}/>)
+}
+
+export default hoistStatics(RepoListQueryRenderer, RepoList);
 
 const styles = StyleSheet.create({
   container: {
