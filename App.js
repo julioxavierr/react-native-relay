@@ -29,6 +29,7 @@ export default class App extends React.Component {
 
     return (
       <View style={styles.container}>
+        <View style={styles.navbar}/>
         <FlatList
           data={mockData}
           keyExtractor={(item) => item.node.id}
@@ -42,7 +43,11 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
    flex: 1,
-   paddingTop: 22
+   backgroundColor: '#FFF'
+  },
+  navbar: {
+    height: 64,
+    backgroundColor: '#51103D'
   },
   item: {
     padding: 10,
