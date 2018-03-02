@@ -55,15 +55,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default createFragmentContainer(RepoDetail, graphql`
-    fragment RepoDetail_repository on Repository {
-        id
-        name
-        owner {
-            login
-            avatarUrl
-        }
-        description
-        url
-    }
-`)
+export default RepoDetailQueryRenderer;
