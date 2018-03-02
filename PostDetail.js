@@ -8,7 +8,9 @@ export default class PostDetail extends Component {
 
     render() {
         return (
-            <Text>I'm a detail screen</Text>
+            <View style={styles.container}>
+                <Text>{this.props.navigation.state.params.id}</Text>
+            </View>
         );
     }
 }

@@ -9,7 +9,7 @@ export default class PostList extends Component {
     static navigationOptions = {title: 'List'};
 
     _onPressRow = (rowData) => {
-        this.props.navigation.navigate('Detail', {name: rowData.node.description})
+        this.props.navigation.navigate('Detail', {id: rowData.node.id})
     }
 
     /**
