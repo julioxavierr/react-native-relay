@@ -95,3 +95,5 @@ local.properties
 
 # Relay Compiler generated files
 **/__generated__/**
+
+server/

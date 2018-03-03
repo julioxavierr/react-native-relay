@@ -1,33 +1,26 @@
-input CreatePost {
+input CreateUser {
   description: String!
   imageUrl: String!
+  name: String!
 }
 
-input CreatePostInput {
-  description: String!
-  imageUrl: String!
-  clientMutationId: String!
-}
-
-type CreatePostPayload {
+# If authentication was successful the payload contains the user and a token. If unsuccessful this payload is null.
+type CreateUserPayload {
+  user: User
+  clientMutationId: String
   viewer: Viewer!
-  clientMutationId: String!
-  post: Post
-  edge: PostEdge
 }
 
-scalar DateTime
-
-input DeletePostInput {
+input DeleteUserInput {
   id: ID!
   clientMutationId: String!
 }
 
-type DeletePostPayload {
+type DeleteUserPayload {
   viewer: Viewer!
   clientMutationId: String!
-  post: Post
-  edge: PostEdge
+  user: User
+  edge: UserEdge
   deletedId: ID
 }
 
@@ -37,10 +30,10 @@ type HelloPayload {
 }
 
 type Mutation {
-  createPost(input: CreatePostInput!): CreatePostPayload
-  updatePost(input: UpdatePostInput!): UpdatePostPayload
-  updateOrCreatePost(input: UpdateOrCreatePostInput!): UpdateOrCreatePostPayload
-  deletePost(input: DeletePostInput!): DeletePostPayload
+  updateUser(input: UpdateUserInput!): UpdateUserPayload
+  updateOrCreateUser(input: UpdateOrCreateUserInput!): UpdateOrCreateUserPayload
+  deleteUser(input: DeleteUserInput!): DeleteUserPayload
+  createUser(input: SignupUserInput!): CreateUserPayload!
 }
 
 # An object with an ID
@@ -64,63 +57,92 @@ type PageInfo {
   endCursor: String
 }
 
-type Post implements Node {
-  createdAt: DateTime!
+type Query {
+  viewer: Viewer!
+
+  # Fetches an object given its ID
+  node(
+    # The ID of an object
+    id: ID!
+  ): Node
+}
+
+input SignupUserInput {
+  description: String!
+  imageUrl: String!
+  name: String!
+  clientMutationId: String!
+}
+
+input UpdateOrCreateUserInput {
+  update: UpdateUser!
+  create: CreateUser!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateUserPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  user: User
+  edge: UserEdge
+}
+
+input UpdateUser {
+  description: String
+  id: ID!
+  imageUrl: String
+  name: String
+}
+
+input UpdateUserInput {
+  description: String
+  id: ID!
+  imageUrl: String
+  name: String
+  clientMutationId: String!
+}
+
+type UpdateUserPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  user: User
+  edge: UserEdge
+}
+
+type User implements Node {
   description: String!
   id: ID!
   imageUrl: String!
-  updatedAt: DateTime!
+  name: String!
 }
 
 # A connection to a list of items.
-type PostConnection {
+type UserConnection {
   # Information to aid in pagination.
   pageInfo: PageInfo!
 
   # A list of edges.
-  edges: [PostEdge]
+  edges: [UserEdge]
 
   # Count of filtered result set without considering pagination arguments
   count: Int!
 }
 
 # An edge in a connection.
-type PostEdge {
+type UserEdge {
   # The item at the end of the edge.
-  node: Post!
+  node: User!
 
   # A cursor for use in pagination.
   cursor: String!
 }
 
-input PostFilter {
+input UserFilter {
   # Logical AND on all given filters.
-  AND: [PostFilter!]
+  AND: [UserFilter!]
 
   # Logical OR on all given filters.
-  OR: [PostFilter!]
-  createdAt: DateTime
-
-  # All values that are not equal to given value.
-  createdAt_not: DateTime
-
-  # All values that are contained in given list.
-  createdAt_in: [DateTime!]
-
-  # All values that are not contained in given list.
-  createdAt_not_in: [DateTime!]
-
-  # All values less than the given value.
-  createdAt_lt: DateTime
-
-  # All values less than or equal the given value.
-  createdAt_lte: DateTime
-
-  # All values greater than the given value.
-  createdAt_gt: DateTime
-
-  # All values greater than or equal the given value.
-  createdAt_gte: DateTime
+  OR: [UserFilter!]
   description: String
 
   # All values that are not equal to given value.
@@ -241,90 +263,64 @@ input PostFilter {
 
   # All values not ending with the given string.
   imageUrl_not_ends_with: String
-  updatedAt: DateTime
+  name: String
 
   # All values that are not equal to given value.
-  updatedAt_not: DateTime
+  name_not: String
 
   # All values that are contained in given list.
-  updatedAt_in: [DateTime!]
+  name_in: [String!]
 
   # All values that are not contained in given list.
-  updatedAt_not_in: [DateTime!]
+  name_not_in: [String!]
 
   # All values less than the given value.
-  updatedAt_lt: DateTime
+  name_lt: String
 
   # All values less than or equal the given value.
-  updatedAt_lte: DateTime
+  name_lte: String
 
   # All values greater than the given value.
-  updatedAt_gt: DateTime
+  name_gt: String
 
   # All values greater than or equal the given value.
-  updatedAt_gte: DateTime
+  name_gte: String
+
+  # All values containing the given string.
+  name_contains: String
+
+  # All values not containing the given string.
+  name_not_contains: String
+
+  # All values starting with the given string.
+  name_starts_with: String
+
+  # All values not starting with the given string.
+  name_not_starts_with: String
+
+  # All values ending with the given string.
+  name_ends_with: String
+
+  # All values not ending with the given string.
+  name_not_ends_with: String
 }
 
-enum PostOrderBy {
-  createdAt_ASC
-  createdAt_DESC
+enum UserOrderBy {
   description_ASC
   description_DESC
   id_ASC
   id_DESC
   imageUrl_ASC
   imageUrl_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type Query {
-  viewer: Viewer!
-
-  # Fetches an object given its ID
-  node(
-    # The ID of an object
-    id: ID!
-  ): Node
-}
-
-input UpdateOrCreatePostInput {
-  update: UpdatePost!
-  create: CreatePost!
-  clientMutationId: String!
-}
-
-type UpdateOrCreatePostPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  post: Post
-  edge: PostEdge
-}
-
-input UpdatePost {
-  description: String
-  id: ID!
-  imageUrl: String
-}
-
-input UpdatePostInput {
-  description: String
-  id: ID!
-  imageUrl: String
-  clientMutationId: String!
-}
-
-type UpdatePostPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  post: Post
-  edge: PostEdge
+  name_ASC
+  name_DESC
 }
 
 # This is the famous Relay viewer object
 type Viewer {
-  allPosts(filter: PostFilter, orderBy: PostOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
-  Post(id: ID): Post
+  allUsers(filter: UserFilter, orderBy: UserOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  user: User
+  User(id: ID): User
 
   # hello
   hello(name: String): HelloPayload

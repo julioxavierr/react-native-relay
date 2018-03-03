@@ -6,7 +6,7 @@ import hoistStatics from 'hoist-non-react-statics';
 import environment from './Environment';
 
 @withNavigation
-class PostList extends Component {
+class UserList extends Component {
 
 
     static navigationOptions = {title: 'List'};
@@ -24,7 +24,7 @@ class PostList extends Component {
                 <TouchableHighlight style={styles.row} 
                     underlayColor='#EEE'
                     onPress={() => this._onPressRow(rowData)}>
-                    <Text>{rowData.node.description}</Text>
+                    <Text>{rowData.node.name}</Text>
                 </TouchableHighlight>
                 <View style={styles.line} />
                 </View>)
@@ -36,7 +36,7 @@ class PostList extends Component {
         return (
             <View style={styles.container}>
             <FlatList
-                data={this.props.viewer.allPosts.edges}
+                data={this.props.viewer.allUsers.edges}
                 keyExtractor={(item) => item.node.__id}
                 renderItem={({item}) => this._renderRowView(item)}
             />
@@ -45,25 +45,25 @@ class PostList extends Component {
     }
 }
 
-const PostListContainer = createFragmentContainer(PostList, graphql`
-    fragment PostList_viewer on Viewer {
-    allPosts(last: 100, orderBy: createdAt_DESC) @connection(key: "ListPage_allPosts", filters: []){
+const UserListContainer = createFragmentContainer(UserList, graphql`
+    fragment UserList_viewer on Viewer {
+    allUsers(last: 100) @connection(key: "ListPage_allUsers", filters: []){
       edges {
         node {
-        description
-        ...Post_post
+        name
+        ...User_user
         }
       }
     }
   }
 `)
 
-const PostListQueryRenderer = () => {
+const UserListQueryRenderer = () => {
     return (<QueryRenderer environment={environment}
         query={graphql`
-            query PostListQuery{
+            query UserListQuery{
                 viewer {
-                    ...PostList_viewer
+                    ...UserList_viewer
                 }
             }
         `}
@@ -71,14 +71,14 @@ const PostListQueryRenderer = () => {
             if (error) {
                 return <Text>Error...</Text>
             } else if (props) {
-                return <PostListContainer viewer={props.viewer}/>
+                return <UserListContainer viewer={props.viewer}/>
             } else {
                 return (<Text>Loading...</Text>);
             }
         }}/>)
 }
 
-export default hoistStatics(PostListQueryRenderer, PostList);
+export default hoistStatics(UserListQueryRenderer, UserList);
 
 const styles = StyleSheet.create({
   container: {

@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
 import hoistStatics from 'hoist-non-react-statics';
 import environment from './Environment';
 
-class Post extends Component {
+class User extends Component {
 
 
     static navigationOptions = {title: 'Detail'};
@@ -12,33 +12,33 @@ class Post extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>{this.props.post.description}</Text>
+                <Text>{this.props.user.description}</Text>
             </View>
         );
     }
 }
 
-const PostContainer = createFragmentContainer(Post, graphql`
-        fragment Post_post on Post {
+const UserContainer = createFragmentContainer(User, graphql`
+        fragment User_user on User {
                 id
                 description
                 imageUrl
         }
 `)
 
-const PostQueryRenderer = ({ navigation }) => {
+const UserQueryRenderer = ({ navigation }) => {
     return (
         <QueryRenderer environment={environment}
             query={graphql`
-                query PostQuery($id: ID!){
+                query UserQuery($id: ID!){
                     node(id: $id){
-                        ...Post_post
+                        ...User_user
                     }
                 }`} 
             variables={{id: navigation.state.params.id}}
             render={({error, props}) => {
                 if (props) {
-                    return <PostContainer post={props.node} />
+                    return <UserContainer user={props.node} />
                 }
 
                 return <Text>Loading...</Text>
@@ -53,4 +53,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default PostQueryRenderer;
+export default UserQueryRenderer;

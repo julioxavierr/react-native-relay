@@ -9,7 +9,7 @@ const {
 
   const network = Network.create((operation, variables) => {
 
-    return fetch('https://api.graph.cool/relay/v1/cje758bx941cy0117m1ssjvin', {
+    return fetch('https://api.graph.cool/relay/v1/cjebvon5a0bcn0105kli2tcp7', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
