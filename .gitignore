@@ -93,4 +93,5 @@ build/
 local.properties
 *.iml
 
+# Relay Compiler generated files
 **/__generated__/**

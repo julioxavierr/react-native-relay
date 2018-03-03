@@ -19,24 +19,26 @@ class RepoDetail extends Component {
 }
 
 const RepoDetailContainer = createFragmentContainer(RepoDetail, graphql`
-fragment RepoDetail_repository on Repository {
-    id
-    name
-    owner {
-        login
-        avatarUrl
+    fragment RepoDetail_repository on Repository {
+        id
+        name
+        owner {
+            login
+            avatarUrl
+        }
+        description
+        url
     }
-    description
-    url
-}
 `)
 
 const RepoDetailQueryRenderer = ({ navigation }) => {
     return (
         <QueryRenderer environment={environment}
             query={graphql`
-                query RepoDetailQuery($id: ID!){
-                    ...RepoDetail_repository
+                query RepoDetailQuery($repoId: ID!){
+                    node(id: $repoId){
+                        ...RepoDetail_repository
+                    }
                 }`} variables={{id: navigation.state.params.id}}
                 render={({error, props}) => {
                     if (props) {

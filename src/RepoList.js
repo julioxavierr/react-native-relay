@@ -32,11 +32,11 @@ class RepoList extends Component {
 
     render() {
         this.navigation = this.props.navigation;
-        
+
         return (
             <View style={styles.container}>
             <FlatList
-                data={this.props.viewer.allPosts.edges}
+                data={this.props.query.viewer.repositories.edges}
                 keyExtractor={(item) => item.node.__id}
                 renderItem={({item}) => this._renderRowView(item)}
             />
@@ -46,11 +46,14 @@ class RepoList extends Component {
 }
 
 const RepoListContainer = createFragmentContainer(RepoList, graphql`
-    fragment RepoList_viewer on Viewer {
-        repositories(last: 30) @connection(key: "RepoList_repositories", filters: []){
-            edges {
-                node {
-                    ...RepoDetail_repository
+    fragment RepoList_query on Query {
+        user(login: "julioxavierr"){
+            repositories(first: 10) {
+                edges {
+                    node {
+                        id
+                        name
+                    }
                 }
             }
         }
@@ -61,12 +64,24 @@ const RepoListQueryRenderer = () => {
     return (<QueryRenderer environment={environment}
         query={graphql`
             query RepoListQuery {
-                ...RepoList_viewer
+                viewer {
+                    repositories(last: 10){
+                        edges {
+                            node {
+                                id
+                                name
+                            }
+                        }
+                    }
+                }
             }
         `}
+        variables={{}}
         render={({error, props}) => {
-            if (props) {
-                return <RepoListContainer/>
+            if (error) {
+                return <Text>Error...</Text>
+            } else if (props) {
+                return <RepoListContainer query={props}/>
             } else {
                 return (<Text>Loading...</Text>);
             }
