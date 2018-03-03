@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import { StyleSheet, FlatList, View, Text, TouchableHighlight } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import RepoList from './RepoList';
-import RepoDetail from './RepoDetail';
+import PostList from './PostList';
+import Post from './Post';
 
 RootStack = StackNavigator(
     {
-        List: {screen: RepoList},
-        Detail: {screen: RepoDetail}
+        List: {screen: PostList},
+        Detail: {screen: Post}
     },
     {
         initialRouteName: 'List'

@@ -6,13 +6,13 @@ import hoistStatics from 'hoist-non-react-statics';
 import environment from './Environment';
 
 @withNavigation
-class RepoList extends Component {
+class PostList extends Component {
 
 
     static navigationOptions = {title: 'List'};
 
     _onPressRow = (rowData) => {
-        this.props.navigation.navigate('Detail', {id: rowData.node.id})
+        this.props.navigation.navigate('Detail', {id: rowData.node.__id})
     }
 
     /**
@@ -24,7 +24,7 @@ class RepoList extends Component {
                 <TouchableHighlight style={styles.row} 
                     underlayColor='#EEE'
                     onPress={() => this._onPressRow(rowData)}>
-                    <Text>{rowData.node.name}</Text>
+                    <Text>{rowData.node.description}</Text>
                 </TouchableHighlight>
                 <View style={styles.line} />
                 </View>)
@@ -36,7 +36,7 @@ class RepoList extends Component {
         return (
             <View style={styles.container}>
             <FlatList
-                data={this.props.query.viewer.repositories.edges}
+                data={this.props.viewer.allPosts.edges}
                 keyExtractor={(item) => item.node.__id}
                 renderItem={({item}) => this._renderRowView(item)}
             />
@@ -45,50 +45,40 @@ class RepoList extends Component {
     }
 }
 
-const RepoListContainer = createFragmentContainer(RepoList, graphql`
-    fragment RepoList_query on Query {
-        user(login: "julioxavierr"){
-            repositories(first: 10) {
-                edges {
-                    node {
-                        id
-                        name
-                    }
-                }
-            }
+const PostListContainer = createFragmentContainer(PostList, graphql`
+    fragment PostList_viewer on Viewer {
+    allPosts(last: 100, orderBy: createdAt_DESC) @connection(key: "ListPage_allPosts", filters: []){
+      edges {
+        node {
+        description
+        ...Post_post
         }
+      }
     }
+  }
 `)
 
-const RepoListQueryRenderer = () => {
+const PostListQueryRenderer = () => {
     return (<QueryRenderer environment={environment}
         query={graphql`
-            query RepoListQuery {
+            query PostListQuery{
                 viewer {
-                    repositories(last: 10){
-                        edges {
-                            node {
-                                id
-                                name
-                            }
-                        }
-                    }
+                    ...PostList_viewer
                 }
             }
         `}
-        variables={{}}
         render={({error, props}) => {
             if (error) {
                 return <Text>Error...</Text>
             } else if (props) {
-                return <RepoListContainer query={props}/>
+                return <PostListContainer viewer={props.viewer}/>
             } else {
                 return (<Text>Loading...</Text>);
             }
         }}/>)
 }
 
-export default hoistStatics(RepoListQueryRenderer, RepoList);
+export default hoistStatics(PostListQueryRenderer, PostList);
 
 const styles = StyleSheet.create({
   container: {
