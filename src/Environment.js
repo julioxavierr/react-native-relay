@@ -9,12 +9,11 @@ const {
 
   const network = Network.create((operation, variables) => {
 
-    return fetch('https://api.github.com/graphql', {
+    return fetch('https://api.graph.cool/relay/v1/cje758bx941cy0117m1ssjvin', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': '__GITHUB_API__'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         query: operation.text,
