@@ -14,7 +14,7 @@ const {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'bearer 6c356922178822a9bc80c4a02c2bb418e04520db'
+        'Authorization': '__GITHUB_API__'
       },
       body: JSON.stringify({
         query: operation.text,

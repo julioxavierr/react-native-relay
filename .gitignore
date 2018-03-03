@@ -92,3 +92,5 @@ build/
 .gradle
 local.properties
 *.iml
+
+**/__generated__/**
