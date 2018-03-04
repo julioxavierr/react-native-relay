@@ -24,9 +24,8 @@ class UserList extends Component {
                 <TouchableHighlight style={styles.row} 
                     underlayColor='#EEE'
                     onPress={() => this._onPressRow(rowData)}>
-                    <Text>{rowData.node.name}</Text>
+                    <Text style={styles.rowText} adjustsFontSizeToFit={true}>{rowData.node.name}</Text>
                 </TouchableHighlight>
-                <View style={styles.line} />
                 </View>)
     }
 
@@ -83,7 +82,7 @@ export default hoistStatics(UserListQueryRenderer, UserList);
 const styles = StyleSheet.create({
   container: {
    flex: 1,
-   backgroundColor: '#FFF'
+   backgroundColor: '#EEE'
   },
   navbar: {
     height: 64,
@@ -91,10 +90,20 @@ const styles = StyleSheet.create({
   },
   row: {
     padding: 10,
-    height: 44
+    height: 100,
+    borderColor: '#000',
+    marginVertical: 10,
+    marginHorizontal: 35,
+    backgroundColor: '#FFF',
   },
-  line: {
-    backgroundColor:'#CCC',
-    height: 1
-  },
+  rowText: {
+      fontSize: 30,
+      textAlign: 'left',
+      flex: 1,
+      justifyContent: 'center',
+      fontWeight: '400',
+      width: 275,
+      height: 65,
+      color: '#FF086D',
+  }
 })

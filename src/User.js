@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { View, Text, StyleSheet, Button, Alert, Image} from 'react-native';
-import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
+import { createFragmentContainer, graphql, QueryRenderer, requestSubscription } from 'react-relay';
 import hoistStatics from 'hoist-non-react-statics';
 import environment from './Environment';
 
