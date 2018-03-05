@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, FlatList, View, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, FlatList, View, Text, TouchableHighlight, Image } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
 import hoistStatics from 'hoist-non-react-statics';
@@ -20,13 +20,16 @@ class UserList extends Component {
      * @param {object} rowData 
      */
     _renderRowView(rowData) {
-        return (<View>
+        return (
                 <TouchableHighlight style={styles.row} 
                     underlayColor='#EEE'
                     onPress={() => this._onPressRow(rowData)}>
-                    <Text style={styles.rowText} adjustsFontSizeToFit={true}>{rowData.node.name}</Text>
+                    <View style={styles.rowView}>
+                        <Text style={styles.rowText} adjustsFontSizeToFit={true}>{rowData.node.name}</Text>
+                        <Image source={require('./assets/arrow.png')}/>
+                    </View>
                 </TouchableHighlight>
-                </View>)
+                )
     }
 
     render() {
@@ -81,8 +84,8 @@ export default hoistStatics(UserListQueryRenderer, UserList);
 
 const styles = StyleSheet.create({
   container: {
-   flex: 1,
-   backgroundColor: '#EEE'
+    flex: 1,
+    backgroundColor: '#EEE'
   },
   navbar: {
     height: 64,
@@ -96,14 +99,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 35,
     backgroundColor: '#FFF',
   },
+  rowView: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   rowText: {
-      fontSize: 30,
-      textAlign: 'left',
-      flex: 1,
-      justifyContent: 'center',
-      fontWeight: '400',
-      width: 275,
-      height: 65,
-      color: '#FF086D',
-  }
+    flex: 1,
+    width: 250,
+    height: 80,
+    fontSize: 30,
+    textAlign: 'left',
+    fontWeight: '400',
+    color: '#FF086D',
+  },
 })
