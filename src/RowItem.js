@@ -24,26 +24,32 @@ export default class RowItem extends Component {
 
 const styles = StyleSheet.create({
     row: {
-      padding: 10,
-      height: 100,
-      borderColor: '#000',
-      marginVertical: 20,
-      marginHorizontal: 35,
-      backgroundColor: '#FFF',
+        padding: 10,
+        height: 100,
+        borderColor: '#000',
+        marginVertical: 20,
+        marginHorizontal: 35,
+        backgroundColor: '#FFF',
+        shadowOpacity: 0.15,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: -10,
+            heigth: -10
+        }
     },
     rowView: {
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     rowText: {
-      flex: 1,
-      width: 250,
-      height: 80,
-      fontSize: 30,
-      textAlign: 'left',
-      fontWeight: '400',
-      color: '#FF086D',
+        flex: 1,
+        width: 250,
+        height: 80,
+        fontSize: 30,
+        textAlign: 'left',
+        fontWeight: '400',
+        color: '#FF086D',
     },
-  })
+})
