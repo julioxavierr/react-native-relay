@@ -27,7 +27,10 @@ class User extends Component {
                         <Text style={styles.insideText}>{info.name}</Text>
                     </View>
                 </ImageBackground>
-                <Text style={{flex: 2}}>{info.description}</Text>
+                <View style={{flex: 2, padding: 30}}>
+                    <Text style={{fontWeight: '800', fontSize: 30, color: 'white', marginBottom: 20}}>Position:</Text>
+                    <Text style={{fontWeight: '600', fontSize: 25, color: 'white'}}>{info.description}</Text>
+                </View>
             </View>
         );
     }
@@ -65,7 +68,7 @@ const UserQueryRenderer = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
    flex: 1,
-   backgroundColor: '#50E3AC'
+   backgroundColor: '#508FF2'
   },
   spinner: {
     flex: 1,
@@ -76,14 +79,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   insideView: {
-    backgroundColor: 'rgba(256, 256, 256, 0.5)',
+    backgroundColor: 'rgba(256, 256, 256, 0.8)',
     padding: 20,
   },
   insideText: {
     fontSize: 40,
     textAlign: 'left',
-    fontWeight: '400',
-    color: '#FF086D',
+    fontWeight: '800',
+    color: '#508FF2',
   }
 
 });

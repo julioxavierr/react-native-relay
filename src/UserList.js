@@ -67,7 +67,7 @@ export default hoistStatics(UserListQueryRenderer, UserList);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#50E3AC',
+    backgroundColor: '#508FF2',
     justifyContent: 'center'
   },
 })
