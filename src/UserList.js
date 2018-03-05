@@ -5,6 +5,7 @@ import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
 import hoistStatics from 'hoist-non-react-statics';
 import environment from './Environment';
 import RowItem from './RowItem';
+import BpkSpinner from 'react-native-bpk-component-spinner';
 
 @withNavigation
 class UserList extends Component {
@@ -56,7 +57,7 @@ const UserListQueryRenderer = () => {
             } else if (props) {
                 return <UserListContainer viewer={props.viewer}/>
             } else {
-                return (<Text>Loading...</Text>);
+                return <BpkSpinner style={styles.container} type="light" />
             }
         }}/>)
 }
@@ -66,6 +67,7 @@ export default hoistStatics(UserListQueryRenderer, UserList);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EEE'
+    backgroundColor: '#50E3AC',
+    justifyContent: 'center'
   },
 })

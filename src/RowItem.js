@@ -25,7 +25,7 @@ export default class RowItem extends Component {
 const styles = StyleSheet.create({
     row: {
         padding: 10,
-        height: 100,
+        height: 120,
         borderColor: '#000',
         marginVertical: 20,
         marginHorizontal: 35,

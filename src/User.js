@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import { View, Text, StyleSheet, Button, Alert, Image} from 'react-native';
+import { View, Text, StyleSheet, Button, Alert, ImageBackground} from 'react-native';
 import { createFragmentContainer, graphql, QueryRenderer, requestSubscription } from 'react-relay';
 import hoistStatics from 'hoist-non-react-statics';
 import environment from './Environment';
+import BpkSpinner from 'react-native-bpk-component-spinner';
 
 class User extends Component {
     static navigationOptions = {title: 'Detail'};
@@ -21,9 +22,12 @@ class User extends Component {
         const info = this.state
         return (
             <View style={styles.container}>
-                <Image source={{uri: info.imageUrl}} style={{width: 400, height: 400}}/>
-                <Text>{info.name}</Text>
-                <Text>{info.description}</Text>
+                <ImageBackground source={{uri: info.imageUrl}} style={styles.image}>
+                    <View style={styles.insideView}>
+                        <Text style={styles.insideText}>{info.name}</Text>
+                    </View>
+                </ImageBackground>
+                <Text style={{flex: 2}}>{info.description}</Text>
             </View>
         );
     }
@@ -53,7 +57,7 @@ const UserQueryRenderer = ({ navigation }) => {
                     return <UserContainer user={props.node} />
                 }
 
-                return <Text>Loading...</Text>
+                return <BpkSpinner style={styles.spinner} type="light" />
             }} />
     )
 }
@@ -61,8 +65,27 @@ const UserQueryRenderer = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
    flex: 1,
-   backgroundColor: '#FFF'
+   backgroundColor: '#50E3AC'
+  },
+  spinner: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  image: {
+    flex: 3,
+    justifyContent: 'flex-end',
+  },
+  insideView: {
+    backgroundColor: 'rgba(256, 256, 256, 0.5)',
+    padding: 20,
+  },
+  insideText: {
+    fontSize: 40,
+    textAlign: 'left',
+    fontWeight: '400',
+    color: '#FF086D',
   }
+
 });
 
 export default UserQueryRenderer;
