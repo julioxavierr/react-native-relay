@@ -24,9 +24,6 @@ class User extends Component {
                 <Image source={{uri: info.imageUrl}} style={{width: 400, height: 400}}/>
                 <Text>{info.name}</Text>
                 <Text>{info.description}</Text>
-                <Button onPress={() => {
-                    this.setState({name: '', description: ''});
-                }} title="Clean"/>
             </View>
         );
     }
