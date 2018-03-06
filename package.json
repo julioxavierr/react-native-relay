@@ -20,6 +20,7 @@
     "preset": "react-native"
   },
   "dependencies": {
+    "babel-preset-react-native-stage-0": "^1.0.1",
     "hoist-non-react-statics": "^2.5.0",
     "react": "16.2.0",
     "react-native": "0.52.0",
