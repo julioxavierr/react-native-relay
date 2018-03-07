@@ -7,7 +7,10 @@ import { linkTo } from '@storybook/addon-links';
 
 import Welcome from './Welcome';
 import RowItem from './RowItem';
+import User from './User';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
 storiesOf('RowItem', module).add('to Storybook', () => <RowItem/>);
+
+storiesOf('User', module).add('to Storybook', () => <User/>)
