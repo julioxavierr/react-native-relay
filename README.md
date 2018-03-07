@@ -14,11 +14,9 @@
 - [x] retrieve the data from the server and display it inside a FlatList
 - [x] design
 - [ ] fastlane
-- [ ] authentication
 - [ ] own GraphQL server
-- [ ] [storybook] with components
+- [x] [storybook] with components
 - [ ] tests using [jest]
-- [ ] use Relay Subscriptions
 
 
 [storybook]: https://github.com/storybooks/storybook
