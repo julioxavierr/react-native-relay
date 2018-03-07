@@ -10,7 +10,7 @@ class User extends Component {
 
     constructor(){
         super();
-        this.state = {name: '', imageUrl: 'http://nordicflanges.com/wp-content/uploads/2017/05/anonym_man_gra.gif', description: ''}
+        this.state = {name: '', imageUrl: 'https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png', description: ''}
     }
 
     componentDidMount(){
