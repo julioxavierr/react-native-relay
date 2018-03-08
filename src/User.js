@@ -10,16 +10,21 @@ class User extends Component {
 
     constructor(){
         super();
+
+        // Default infos for user
         this.state = {name: '', imageUrl: 'https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png', description: ''}
     }
 
     componentDidMount(){
         const user = this.props.user;
+
+        // Set user state using query data
         this.setState({name: user.name, imageUrl: user.imageUrl, description: user.description});
     }
 
     render() {
         const info = this.state
+        
         return (
             <View style={styles.container}>
                 <ImageBackground source={{uri: info.imageUrl}} style={styles.image}>

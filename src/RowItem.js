@@ -3,21 +3,24 @@ import { StyleSheet, View, Text, TouchableHighlight, Image } from 'react-native'
 
 export default class RowItem extends Component {
 
+    // Navigate to node detail when component is pressed
     _onPress = (data) => {
         this.props.navigation.navigate('Detail', {id: data.node.__id})
     }
 
     render() {
         const data = this.props.data;
+        
         return (
-        <TouchableHighlight style={styles.row} 
-            underlayColor='#EEE'
-            onPress={() => this._onPress(data)}>
-            <View style={styles.rowView}>
-                <Text style={styles.rowText} adjustsFontSizeToFit={true}>{data.node.name}</Text>
-                <Image source={require('./assets/arrow.png')}/>
-            </View>
-        </TouchableHighlight>);
+            <TouchableHighlight style={styles.row} 
+                underlayColor='#EEE'
+                onPress={() => this._onPress(data)}>
+                <View style={styles.rowView}>
+                    <Text style={styles.rowText} adjustsFontSizeToFit={true}>{data.node.name}</Text>
+                    <Image source={require('./assets/arrow.png')}/>
+                </View>
+            </TouchableHighlight>
+        );
     }
 
 }

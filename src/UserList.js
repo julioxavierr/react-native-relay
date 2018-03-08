@@ -13,6 +13,7 @@ class UserList extends Component {
 
     static navigationOptions = {title: 'List'};
 
+    // Render a view including a FlatList that contains RowItem's 
     render() {
         this.navigation = this.props.navigation;
 
@@ -29,6 +30,8 @@ class UserList extends Component {
 
 }
 
+// Get the last 100 users names using GraphQL
+// and provide info to User_user
 const UserListContainer = createFragmentContainer(UserList, graphql`
     fragment UserList_viewer on Viewer {
     allUsers(last: 100) @connection(key: "ListPage_allUsers", filters: []){
@@ -55,8 +58,10 @@ const UserListQueryRenderer = () => {
             if (error) {
                 return <Text>Error...</Text>
             } else if (props) {
+                // Expected path
                 return <UserListContainer viewer={props.viewer}/>
             } else {
+                // Display loading spinner
                 return <BpkSpinner style={styles.container} type="light" />
             }
         }}/>)
