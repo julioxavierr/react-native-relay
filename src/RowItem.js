@@ -5,7 +5,7 @@ export default class RowItem extends Component {
 
     // Navigate to node detail when component is pressed
     _onPress = (data) => {
-        this.props.navigation.navigate('Detail', {id: data.node.__id})
+        this.props.navigation.navigate('Detail', {id: data.node.id})
     }
 
     render() {

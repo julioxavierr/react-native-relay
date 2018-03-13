@@ -16,12 +16,13 @@ class UserList extends Component {
     // Render a view including a FlatList that contains RowItem's 
     render() {
         this.navigation = this.props.navigation;
+        const users = this.props.query.users
 
         return (
             <View style={styles.container}>
             <FlatList
-                data={this.props.viewer.allUsers.edges}
-                keyExtractor={(item) => item.node.__id}
+                data={users.edges}
+                keyExtractor={(item) => item.node.id}
                 renderItem={({item}) => <RowItem data={item} navigation={this.navigation}/>}
             />
             </View>
@@ -33,25 +34,23 @@ class UserList extends Component {
 // Get the last 100 users names using GraphQL
 // and provide info to User_user
 const UserListContainer = createFragmentContainer(UserList, graphql`
-    fragment UserList_viewer on Viewer {
-    allUsers(last: 100) @connection(key: "ListPage_allUsers", filters: []){
-      edges {
-        node {
-        name
-        ...User_user
+    fragment UserList_query on Query {
+        users {
+            edges {
+                node {
+                    id
+                    name
+                }
+            }
         }
-      }
     }
-  }
 `)
 
 const UserListQueryRenderer = () => {
     return (<QueryRenderer environment={environment}
         query={graphql`
             query UserListQuery{
-                viewer {
-                    ...UserList_viewer
-                }
+                ...UserList_query
             }
         `}
         render={({error, props}) => {
@@ -59,7 +58,7 @@ const UserListQueryRenderer = () => {
                 return <Text>Error...</Text>
             } else if (props) {
                 // Expected path
-                return <UserListContainer viewer={props.viewer}/>
+                return <UserListContainer query={props}/>
             } else {
                 // Display loading spinner
                 return <BpkSpinner style={styles.container} type="light" />
