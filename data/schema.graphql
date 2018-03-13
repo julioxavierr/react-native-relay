@@ -1,39 +1,33 @@
-input CreateUser {
-  description: String!
-  imageUrl: String!
-  name: String!
-}
+input ChangePasswordInput {
+  oldPassword: String!
 
-# If authentication was successful the payload contains the user and a token. If unsuccessful this payload is null.
-type CreateUserPayload {
-  user: User
+  # user new password
+  password: String!
   clientMutationId: String
-  viewer: Viewer!
 }
 
-input DeleteUserInput {
-  id: ID!
-  clientMutationId: String!
+type ChangePasswordPayload {
+  error: String
+  me: User
+  clientMutationId: String
 }
 
-type DeleteUserPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  user: User
-  edge: UserEdge
-  deletedId: ID
+input LoginEmailInput {
+  email: String!
+  password: String!
+  clientMutationId: String
 }
 
-# HelloPayload
-type HelloPayload {
-  message: String!
+type LoginEmailPayload {
+  token: String
+  error: String
+  clientMutationId: String
 }
 
 type Mutation {
-  updateUser(input: UpdateUserInput!): UpdateUserPayload
-  updateOrCreateUser(input: UpdateOrCreateUserInput!): UpdateOrCreateUserPayload
-  deleteUser(input: DeleteUserInput!): DeleteUserPayload
-  createUser(input: SignupUserInput!): CreateUserPayload!
+  LoginEmail(input: LoginEmailInput!): LoginEmailPayload
+  RegisterEmail(input: RegisterEmailInput!): RegisterEmailPayload
+  ChangePassword(input: ChangePasswordInput!): ChangePasswordPayload
 }
 
 # An object with an ID
@@ -57,63 +51,47 @@ type PageInfo {
   endCursor: String
 }
 
+# The root of all... queries
 type Query {
-  viewer: Viewer!
-
   # Fetches an object given its ID
   node(
     # The ID of an object
     id: ID!
   ): Node
+  me: User
+  user(id: ID!): User
+  users(after: String, first: Int, before: String, last: Int, search: String): UserConnection
 }
 
-input SignupUserInput {
-  description: String!
-  imageUrl: String!
+input RegisterEmailInput {
   name: String!
-  clientMutationId: String!
+  email: String!
+  password: String!
+  clientMutationId: String
 }
 
-input UpdateOrCreateUserInput {
-  update: UpdateUser!
-  create: CreateUser!
-  clientMutationId: String!
+type RegisterEmailPayload {
+  token: String
+  error: String
+  clientMutationId: String
 }
 
-type UpdateOrCreateUserPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  user: User
-  edge: UserEdge
+type Subscription {
+  UserAdded: UserAddedPayload
 }
 
-input UpdateUser {
-  description: String
-  id: ID!
-  imageUrl: String
-  name: String
-}
-
-input UpdateUserInput {
-  description: String
-  id: ID!
-  imageUrl: String
-  name: String
-  clientMutationId: String!
-}
-
-type UpdateUserPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  user: User
-  edge: UserEdge
-}
-
+# User data
 type User implements Node {
-  description: String!
+  # The ID of an object
   id: ID!
-  imageUrl: String!
-  name: String!
+  _id: String
+  name: String
+  email: String
+  active: Boolean
+}
+
+type UserAddedPayload {
+  userEdge: UserEdge
 }
 
 # A connection to a list of items.
@@ -123,207 +101,15 @@ type UserConnection {
 
   # A list of edges.
   edges: [UserEdge]
-
-  # Count of filtered result set without considering pagination arguments
-  count: Int!
+  count: Int
 }
 
 # An edge in a connection.
 type UserEdge {
-  # The item at the end of the edge.
-  node: User!
+  # The item at the end of the edge
+  node: User
 
-  # A cursor for use in pagination.
+  # A cursor for use in pagination
   cursor: String!
-}
-
-input UserFilter {
-  # Logical AND on all given filters.
-  AND: [UserFilter!]
-
-  # Logical OR on all given filters.
-  OR: [UserFilter!]
-  description: String
-
-  # All values that are not equal to given value.
-  description_not: String
-
-  # All values that are contained in given list.
-  description_in: [String!]
-
-  # All values that are not contained in given list.
-  description_not_in: [String!]
-
-  # All values less than the given value.
-  description_lt: String
-
-  # All values less than or equal the given value.
-  description_lte: String
-
-  # All values greater than the given value.
-  description_gt: String
-
-  # All values greater than or equal the given value.
-  description_gte: String
-
-  # All values containing the given string.
-  description_contains: String
-
-  # All values not containing the given string.
-  description_not_contains: String
-
-  # All values starting with the given string.
-  description_starts_with: String
-
-  # All values not starting with the given string.
-  description_not_starts_with: String
-
-  # All values ending with the given string.
-  description_ends_with: String
-
-  # All values not ending with the given string.
-  description_not_ends_with: String
-  id: ID
-
-  # All values that are not equal to given value.
-  id_not: ID
-
-  # All values that are contained in given list.
-  id_in: [ID!]
-
-  # All values that are not contained in given list.
-  id_not_in: [ID!]
-
-  # All values less than the given value.
-  id_lt: ID
-
-  # All values less than or equal the given value.
-  id_lte: ID
-
-  # All values greater than the given value.
-  id_gt: ID
-
-  # All values greater than or equal the given value.
-  id_gte: ID
-
-  # All values containing the given string.
-  id_contains: ID
-
-  # All values not containing the given string.
-  id_not_contains: ID
-
-  # All values starting with the given string.
-  id_starts_with: ID
-
-  # All values not starting with the given string.
-  id_not_starts_with: ID
-
-  # All values ending with the given string.
-  id_ends_with: ID
-
-  # All values not ending with the given string.
-  id_not_ends_with: ID
-  imageUrl: String
-
-  # All values that are not equal to given value.
-  imageUrl_not: String
-
-  # All values that are contained in given list.
-  imageUrl_in: [String!]
-
-  # All values that are not contained in given list.
-  imageUrl_not_in: [String!]
-
-  # All values less than the given value.
-  imageUrl_lt: String
-
-  # All values less than or equal the given value.
-  imageUrl_lte: String
-
-  # All values greater than the given value.
-  imageUrl_gt: String
-
-  # All values greater than or equal the given value.
-  imageUrl_gte: String
-
-  # All values containing the given string.
-  imageUrl_contains: String
-
-  # All values not containing the given string.
-  imageUrl_not_contains: String
-
-  # All values starting with the given string.
-  imageUrl_starts_with: String
-
-  # All values not starting with the given string.
-  imageUrl_not_starts_with: String
-
-  # All values ending with the given string.
-  imageUrl_ends_with: String
-
-  # All values not ending with the given string.
-  imageUrl_not_ends_with: String
-  name: String
-
-  # All values that are not equal to given value.
-  name_not: String
-
-  # All values that are contained in given list.
-  name_in: [String!]
-
-  # All values that are not contained in given list.
-  name_not_in: [String!]
-
-  # All values less than the given value.
-  name_lt: String
-
-  # All values less than or equal the given value.
-  name_lte: String
-
-  # All values greater than the given value.
-  name_gt: String
-
-  # All values greater than or equal the given value.
-  name_gte: String
-
-  # All values containing the given string.
-  name_contains: String
-
-  # All values not containing the given string.
-  name_not_contains: String
-
-  # All values starting with the given string.
-  name_starts_with: String
-
-  # All values not starting with the given string.
-  name_not_starts_with: String
-
-  # All values ending with the given string.
-  name_ends_with: String
-
-  # All values not ending with the given string.
-  name_not_ends_with: String
-}
-
-enum UserOrderBy {
-  description_ASC
-  description_DESC
-  id_ASC
-  id_DESC
-  imageUrl_ASC
-  imageUrl_DESC
-  name_ASC
-  name_DESC
-}
-
-# This is the famous Relay viewer object
-type Viewer {
-  allUsers(filter: UserFilter, orderBy: UserOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  user: User
-  User(id: ID): User
-
-  # hello
-  hello(name: String): HelloPayload
-  id: ID!
 }
 
