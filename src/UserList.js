@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, FlatList, View, Text } from 'react-native';
+import { StyleSheet, FlatList, View, Text, TouchableHighlight } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
 import hoistStatics from 'hoist-non-react-statics';
@@ -13,6 +13,10 @@ class UserList extends Component {
 
     static navigationOptions = {title: 'List'};
 
+    _newUser(){
+        console.log("Create new user");
+    }
+
     // Render a view including a FlatList that contains RowItem's 
     render() {
         this.navigation = this.props.navigation;
@@ -20,11 +24,13 @@ class UserList extends Component {
 
         return (
             <View style={styles.container}>
-            <FlatList
-                data={users.edges}
-                keyExtractor={(item) => item.node.id}
-                renderItem={({item}) => <RowItem data={item} navigation={this.navigation}/>}
-            />
+                <FlatList style={{flex:1}}
+                    data={users.edges} keyExtractor={(item) => item.node.id}
+                    renderItem={({item}) => <RowItem data={item} navigation={this.navigation}/>}
+                />
+                <TouchableHighlight style={styles.newUserButton} onPress={this._newUser}>
+                    <Text style={{fontSize: 30, color: '#FFF'}}>New user</Text>
+                </TouchableHighlight>
             </View>
         );
     }
@@ -73,5 +79,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#508FF2',
     justifyContent: 'center'
+  },
+  newUserButton: {
+      flex: 0.1,
+      backgroundColor: '#aeb0b2',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 10
   },
 })
