@@ -17,7 +17,7 @@ export default class RowItem extends Component {
                 onPress={() => this._onPress(data)}>
                 <View style={styles.rowView}>
                     <Text style={styles.rowText} adjustsFontSizeToFit={true}>{data.node.name}</Text>
-                    <Image source={require('./assets/arrow.png')}/>
+                    <Image source={require('../assets/arrow.png')}/>
                 </View>
             </TouchableHighlight>
         );

@@ -4,18 +4,15 @@ import { withNavigation } from 'react-navigation';
 import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
 import hoistStatics from 'hoist-non-react-statics';
 import environment from './Environment';
-import RowItem from './RowItem';
+import RowItem from './components/RowItem';
 import BpkSpinner from 'react-native-bpk-component-spinner';
+import NewUserButton from './components/NewUserButton';
 
 @withNavigation
 class UserList extends Component {
 
 
     static navigationOptions = {title: 'List'};
-
-    _newUser = (navigation) => {
-        navigation.navigate('New', {});
-    }
 
     // Render a view including a FlatList that contains RowItem's 
     render() {
@@ -28,9 +25,7 @@ class UserList extends Component {
                     data={users.edges} keyExtractor={(item) => item.node.id}
                     renderItem={({item}) => <RowItem data={item} navigation={this.navigation}/>}
                 />
-                <TouchableHighlight style={styles.newUserButton} onPress={() => this._newUser(this.navigation)}>
-                    <Text style={{fontSize: 30, color: '#FFF'}}>New user</Text>
-                </TouchableHighlight>
+                <NewUserButton navigation={this.navigation}/>
             </View>
         );
     }
@@ -79,12 +74,5 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#508FF2',
     justifyContent: 'center'
-  },
-  newUserButton: {
-      flex: 0.1,
-      backgroundColor: '#aeb0b2',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: 10
   },
 })
