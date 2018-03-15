@@ -25,22 +25,18 @@ class User extends Component {
     render() {
         const info = this.state
         
-        // return (
-        //     <View style={styles.container}>
-        //         <ImageBackground source={{uri: info.imageUrl}} style={styles.image}>
-        //             <View style={styles.insideView}>
-        //                 <Text style={styles.insideText}>{info.name}</Text>
-        //             </View>
-        //         </ImageBackground>
-        //         <View style={{flex: 2, padding: 30}}>
-        //             <Text style={{fontWeight: '800', fontSize: 30, color: 'white', marginBottom: 20}}>Position:</Text>
-        //             <Text style={{fontWeight: '600', fontSize: 25, color: 'white'}}>{info.description}</Text>
-        //         </View>
-        //     </View>
-        // );
-
         return (
-            <Text style={styles.insideText}>{info.name}</Text>
+            <View style={styles.container}>
+                <ImageBackground source={{uri: info.imageUrl}} style={styles.image}>
+                    <View style={styles.insideView}>
+                        <Text style={styles.insideText}>{info.name}</Text>
+                    </View>
+                </ImageBackground>
+                <View style={{flex: 2, padding: 30}}>
+                    <Text style={{fontWeight: '800', fontSize: 30, color: 'white', marginBottom: 20}}>Position:</Text>
+                    <Text style={{fontWeight: '600', fontSize: 25, color: 'white'}}>{info.description}</Text>
+                </View>
+            </View>
         );
     }
 }
@@ -49,6 +45,8 @@ const UserContainer = createFragmentContainer(User, graphql`
         fragment User_user on User {
                 id
                 name
+                description
+                imageUrl
         }
 `)
 

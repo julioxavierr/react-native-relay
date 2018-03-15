@@ -66,6 +66,8 @@ type Query {
 input RegisterEmailInput {
   name: String!
   email: String!
+  description: String!
+  imageUrl: String!
   password: String!
   clientMutationId: String
 }
@@ -87,6 +89,8 @@ type User implements Node {
   _id: String
   name: String
   email: String
+  description: String
+  imageUrl: String
   active: Boolean
 }
 
