@@ -3,11 +3,13 @@ import { StyleSheet, FlatList, View, Text, TouchableHighlight } from 'react-nati
 import { StackNavigator } from 'react-navigation';
 import UserList from './UserList';
 import User from './User';
+import NewUser from './NewUser';
 
 RootStack = StackNavigator(
     {
         List: {screen: UserList},
-        Detail: {screen: User}
+        Detail: {screen: User},
+        New: {screen: NewUser},
     },
     {
         initialRouteName: 'List'

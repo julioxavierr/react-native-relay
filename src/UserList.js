@@ -13,8 +13,8 @@ class UserList extends Component {
 
     static navigationOptions = {title: 'List'};
 
-    _newUser(){
-        console.log("Create new user");
+    _newUser = (navigation) => {
+        navigation.navigate('New', {});
     }
 
     // Render a view including a FlatList that contains RowItem's 
@@ -28,7 +28,7 @@ class UserList extends Component {
                     data={users.edges} keyExtractor={(item) => item.node.id}
                     renderItem={({item}) => <RowItem data={item} navigation={this.navigation}/>}
                 />
-                <TouchableHighlight style={styles.newUserButton} onPress={this._newUser}>
+                <TouchableHighlight style={styles.newUserButton} onPress={() => this._newUser(this.navigation)}>
                     <Text style={{fontSize: 30, color: '#FFF'}}>New user</Text>
                 </TouchableHighlight>
             </View>
