@@ -14,7 +14,7 @@
 - [x] retrieve the data from the server and display it inside a FlatList
 - [x] design
 - [ ] fastlane
-- [ ] own GraphQL server
+- [x] own GraphQL server
 - [x] [storybook] with components
 - [ ] tests using [jest]
 
