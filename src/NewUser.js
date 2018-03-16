@@ -14,20 +14,24 @@ export default class NewUser extends Component {
 
     render() {
         return (
-            <View>
-                <Text>Create a new user</Text>
+            <View style={styles.container} >
+                <Text style={styles.title}>Create a new user</Text>
 
                 {/* name */}
-                <TextInput onChangeText={text => this._name = text} placeholder="username"></TextInput>
+                <TextInput style={styles.regularInput}
+                    onChangeText={text => this._name = text} placeholder="username"></TextInput>
 
                 {/* email */}
-                <TextInput onChangeText={text => this._mail = text} placeholder="e-mail"></TextInput>
+                <TextInput style={styles.regularInput}
+                onChangeText={text => this._mail = text} placeholder="e-mail"></TextInput>
 
                 {/* description */}
-                <TextInput onChangeText={text => this._description = text} placeholder="description"></TextInput>
+                <TextInput style={styles.regularInput}
+                    onChangeText={text => this._description = text} placeholder="description"></TextInput>
 
                 {/* imageUrl */}
-                <TextInput onChangeText={text => this._imageUrl = text} placeholder="imageUrl"></TextInput>
+                <TextInput style={styles.regularInput}
+                    onChangeText={text => this._imageUrl = text} placeholder="imageUrl"></TextInput>
 
                 <Button
                     color='#FABA30'
@@ -39,3 +43,28 @@ export default class NewUser extends Component {
         );
     }
 }
+
+styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#508FF2',
+    },
+    title: {
+        fontWeight: '800',
+        fontSize: 30,
+        color: '#FFF',
+        marginBottom: 20,
+        marginTop: 20,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+    },
+    regularInput: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        backgroundColor: '#FFF',
+        margin: 20,
+        paddingLeft: 10,
+    },
+}
+)
