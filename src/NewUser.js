@@ -18,20 +18,20 @@ export default class NewUser extends Component {
                 <Text style={styles.title}>Create a new user</Text>
 
                 {/* name */}
-                <TextInput style={styles.regularInput}
-                    onChangeText={text => this._name = text} placeholder="username"></TextInput>
+                <TextInput style={styles.regularInput} autoCorrect={false}
+                    onChangeText={text => this._name = text} placeholder="Name"></TextInput>
 
                 {/* email */}
-                <TextInput style={styles.regularInput}
-                onChangeText={text => this._mail = text} placeholder="e-mail"></TextInput>
+                <TextInput style={styles.regularInput} autoCapitalize={'none'} autocorrect={false}
+                onChangeText={text => this._mail = text} placeholder="E-mail"></TextInput>
 
                 {/* description */}
-                <TextInput style={styles.regularInput}
-                    onChangeText={text => this._description = text} placeholder="description"></TextInput>
+                <TextInput style={styles.regularInput} autoCorrect={false}
+                    onChangeText={text => this._description = text} placeholder="Description"></TextInput>
 
                 {/* imageUrl */}
-                <TextInput style={styles.regularInput}
-                    onChangeText={text => this._imageUrl = text} placeholder="imageUrl"></TextInput>
+                <TextInput style={styles.regularInput} autoCapitalize={'none'} autoCorrect={false}
+                    onChangeText={text => this._imageUrl = text} placeholder="Image URL"></TextInput>
 
                 <Button
                     color='#FABA30'
