@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, StyleSheet, Button } from 'react-native';
+import { graphql, commitMutation } from 'react-relay';
+import environment from './Environment';
 
 export default class NewUser extends Component {
     constructor(props){
@@ -9,7 +11,28 @@ export default class NewUser extends Component {
 
     _handleButtonPress = () => {
         console.log('Submit')
-        console.log(this._name + this._mail + this._description + this._imageUrl)
+
+        const variables = {
+            input: {
+                name: this._name,
+                email: this._mail,
+                password: '123456',
+                description: this._description,
+                imageUrl: this._imageUrl,
+            }
+        }
+
+        commitMutation(
+            environment,
+            {
+                mutation,
+                variables,
+                onCompleted: (response, errors) => {
+                    this.props.navigation.goBack();
+                },
+                onError: err => console.error(err),
+            },
+        );   
     }
 
     render() {
@@ -43,6 +66,15 @@ export default class NewUser extends Component {
         );
     }
 }
+
+const mutation = graphql`
+    mutation NewUserMutation($input: RegisterEmailInput!) {
+        RegisterEmail(input: $input) {
+            token
+            error
+        }
+    }
+`;
 
 styles = StyleSheet.create({
     container: {
