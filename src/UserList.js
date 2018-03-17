@@ -32,11 +32,11 @@ class UserList extends Component {
 
 }
 
-// Get the last 100 users names using GraphQL
+// Get the last 20 users names using GraphQL
 // and provide info to User_user
 const UserListContainer = createFragmentContainer(UserList, graphql`
     fragment UserList_query on Query {
-        users {
+        users(last: 20) @connection(key: "UserList_users") {
             edges {
                 node {
                     id
