@@ -73,6 +73,7 @@ input RegisterEmailInput {
 }
 
 type RegisterEmailPayload {
+  user: User
   token: String
   error: String
   clientMutationId: String

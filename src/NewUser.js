@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, Button } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Button, ImageBackground } from 'react-native';
 import { graphql, commitMutation } from 'react-relay';
+import { ConnectionHandler } from 'relay-runtime';
 import environment from './Environment';
 
 export default class NewUser extends Component {
@@ -27,10 +28,28 @@ export default class NewUser extends Component {
             {
                 mutation,
                 variables,
+                updater: (proxyStore) => {
+                    // Retrieve the new user from server response
+                    const registerUserField = proxyStore.getRootField('RegisterEmail');
+                    const newUser = registerUserField.getLinkedRecord('user');
+
+                    // Add the user to the store
+                    const record = proxyStore.getRoot()
+                    const connection = ConnectionHandler.getConnection(record, 'UserList_users');
+
+                    console.log(registerUserField);
+                    console.log(newUser);
+                    console.log(record);
+                    console.log(connection);
+
+                    if(connection) {
+                        ConnectionHandler.insertEdgeAfter(connection, newUser);
+                    }
+                },
                 onCompleted: (response, errors) => {
                     this.props.navigation.goBack();
                 },
-                onError: err => console.error(err),
+                onError: err => console.error(err)
             },
         );   
     }
@@ -70,8 +89,14 @@ export default class NewUser extends Component {
 const mutation = graphql`
     mutation NewUserMutation($input: RegisterEmailInput!) {
         RegisterEmail(input: $input) {
+            user {
+                id
+                name
+                email
+                description
+                imageUrl
+            }
             token
-            error
         }
     }
 `;
