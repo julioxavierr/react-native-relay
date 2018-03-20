@@ -35,19 +35,15 @@ export default class NewUser extends Component {
 
                     // Add the user to the store
                     const record = proxyStore.getRoot()
-                    const connection = ConnectionHandler.getConnection(record, 'UserList_users', {last: 20});
+                    const users = ConnectionHandler.getConnection(record, 'UserList_users');
 
-                    console.log(registerUserField);
-                    console.log(newUser);
-                    console.log(record);
-                    console.log(connection);
-
-                    if(connection) {
-                        ConnectionHandler.insertEdgeAfter(connection, newUser);
+                    if(users) {
+                        const newEdge = ConnectionHandler.createEdge(proxyStore, users, newUser, 'UserEdge');
+                        ConnectionHandler.insertEdgeBefore(users, newEdge);
                     }
                 },
                 onCompleted: (response, errors) => {
-
+                    this.props.navigation.goBack(); 
                 },
                 onError: err => console.error(err)
             },
