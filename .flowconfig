@@ -2,6 +2,12 @@
 ; We fork some components by platform
 .*/*[.]android.js
 
+; Ignore node_modules
+<PROJECT_ROOT>/node_modules/*
+
+; Ignore __generated__ files 
+<PROJECT_ROOT>/src/__generated__/*
+
 ; Ignore templates for 'react-native init'
 <PROJECT_ROOT>/node_modules/react-native/local-cli/templates/.*
 
@@ -69,7 +75,6 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowIssue\\((\\(>=0\\.\\(5[0-6]\\|[1-4][0-9]\\|
 suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
 
-unsafe.enable_getters_and_setters=true
 
 [version]
-^0.56.0
+^0.68.0
