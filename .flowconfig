@@ -6,7 +6,7 @@
 <PROJECT_ROOT>/node_modules/*
 
 ; Ignore __generated__ files 
-<PROJECT_ROOT>/src/__generated__/*
+.*/__generated__/*
 
 ; Ignore templates for 'react-native init'
 <PROJECT_ROOT>/node_modules/react-native/local-cli/templates/.*
