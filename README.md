@@ -14,12 +14,13 @@
 - [x] retrieve the data from the server and display it inside a FlatList
 - [x] design
 - [ ] fastlane
-- [x] own GraphQL server
+- [x] [own GraphQL server]
 - [x] [storybook] with components
-- [ ] tests using [jest]
+- [x] register user mutation
 
 
 [storybook]: https://github.com/storybooks/storybook
 [jest]: https://jest-everywhere.now.sh
 [GraphQL]: graphql.org/
 [Relay Modern]: https://facebook.github.io/relay/
+[own GraphQL server]: https://github.com/julioxavierr/entria-server
