@@ -5,13 +5,25 @@ import { ConnectionHandler } from 'relay-runtime';
 import environment from '@src/Environment';
 
 export default class NewUser extends Component {
-    constructor(props){
-        super(props);
-        this.state = {name: ''};
+
+    _updateClientStore = (proxyStore) => {
+        // Retrieve the new user from server response
+        const registerUserField = proxyStore.getRootField('RegisterEmail');
+        const newUser = registerUserField.getLinkedRecord('user');
+
+        // Add the user to the store
+        const record = proxyStore.getRoot()
+        const users = ConnectionHandler.getConnection(record, 'UserList_users');
+
+        if(users) {
+            const newEdge = ConnectionHandler.createEdge(proxyStore, users, newUser, 'UserEdge');
+
+            // Insert edge before all other edges, like in server
+            ConnectionHandler.insertEdgeBefore(users, newEdge);
+        }
     }
 
     _handleButtonPress = () => {
-        console.log('Submit')
 
         const variables = {
             input: {
@@ -28,23 +40,8 @@ export default class NewUser extends Component {
             {
                 mutation,
                 variables,
-                updater: (proxyStore) => {
-                    // Retrieve the new user from server response
-                    const registerUserField = proxyStore.getRootField('RegisterEmail');
-                    const newUser = registerUserField.getLinkedRecord('user');
-
-                    // Add the user to the store
-                    const record = proxyStore.getRoot()
-                    const users = ConnectionHandler.getConnection(record, 'UserList_users');
-
-                    if(users) {
-                        const newEdge = ConnectionHandler.createEdge(proxyStore, users, newUser, 'UserEdge');
-                        ConnectionHandler.insertEdgeBefore(users, newEdge);
-                    }
-                },
-                onCompleted: (response, errors) => {
-                    this.props.navigation.goBack(); 
-                },
+                updater: (proxyStore) => this._updateClientStore(proxyStore),
+                onCompleted: () => this.props.navigation.goBack(),
                 onError: err => console.error(err)
             },
         );   
