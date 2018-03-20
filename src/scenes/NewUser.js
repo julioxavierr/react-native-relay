@@ -35,7 +35,7 @@ export default class NewUser extends Component {
 
                     // Add the user to the store
                     const record = proxyStore.getRoot()
-                    const connection = ConnectionHandler.getConnection(record, 'UserList_users');
+                    const connection = ConnectionHandler.getConnection(record, 'UserList_users', {last: 20});
 
                     console.log(registerUserField);
                     console.log(newUser);
@@ -47,7 +47,7 @@ export default class NewUser extends Component {
                     }
                 },
                 onCompleted: (response, errors) => {
-                    this.props.navigation.goBack();
+
                 },
                 onError: err => console.error(err)
             },
