@@ -3,10 +3,10 @@ import { StyleSheet, FlatList, View, Text, TouchableHighlight } from 'react-nati
 import { withNavigation } from 'react-navigation';
 import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
 import hoistStatics from 'hoist-non-react-statics';
-import environment from './Environment';
-import RowItem from './components/RowItem';
+import environment from '@src/Environment';
+import RowItem from '@src/components/RowItem';
 import BpkSpinner from 'react-native-bpk-component-spinner';
-import NewUserButton from './components/NewUserButton';
+import NewUserButton from '@src/components/NewUserButton';
 
 @withNavigation
 class UserList extends Component {

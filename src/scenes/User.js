@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { View, Text, StyleSheet, Button, Alert, ImageBackground} from 'react-native';
 import { createFragmentContainer, graphql, QueryRenderer, requestSubscription } from 'react-relay';
 import hoistStatics from 'hoist-non-react-statics';
-import environment from './Environment';
+import environment from '@src/Environment';
 import BpkSpinner from 'react-native-bpk-component-spinner';
 
 class User extends Component {

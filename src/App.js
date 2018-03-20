@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import { StyleSheet, FlatList, View, Text, TouchableHighlight } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import UserList from './UserList';
-import User from './User';
-import NewUser from './NewUser';
+import UserList from './scenes/UserList';
+import User from './scenes/User';
+import NewUser from './scenes/NewUser';
 
 RootStack = StackNavigator(
     {

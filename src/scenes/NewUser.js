@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, ImageBackground } from 'react-native';
 import { graphql, commitMutation } from 'react-relay';
 import { ConnectionHandler } from 'relay-runtime';
-import environment from './Environment';
+import environment from '@src/Environment';
 
 export default class NewUser extends Component {
     constructor(props){
