@@ -2,7 +2,7 @@
 
 ## Demo
 
-<img src="https://i.imgur.com/SbW2Ipo.gif" width="125" height="220" />
+<img src="https://i.imgur.com/Rm3Lmn5.gif" width="125" height="220" />
 
 ## Features
 
