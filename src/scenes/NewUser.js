@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, Button, ImageBackground } from 'reac
 import { graphql, commitMutation } from 'react-relay';
 import { ConnectionHandler } from 'relay-runtime';
 import environment from '@src/Environment';
+import styled from 'styled-components';
 
 export default class NewUser extends Component {
 
@@ -49,24 +50,24 @@ export default class NewUser extends Component {
 
     render() {
         return (
-            <View style={styles.container} >
-                <Text style={styles.title}>Create a new user</Text>
+            <Wrapper>
+                <Title>Create a new user</Title>
 
                 {/* name */}
-                <TextInput style={styles.regularInput} autoCorrect={false}
-                    onChangeText={text => this._name = text} placeholder="Name"></TextInput>
+                <RegularInput autoCorrect={false} onChangeText={text => this._name = text} 
+                    placeholder="Name"/>
 
                 {/* email */}
-                <TextInput style={styles.regularInput} autoCapitalize={'none'} autocorrect={false}
-                onChangeText={text => this._mail = text} placeholder="E-mail"></TextInput>
+                <RegularInput autoCapitalize={'none'} autocorrect={false}
+                    onChangeText={text => this._mail = text} placeholder="E-mail"/>
 
                 {/* description */}
-                <TextInput style={styles.regularInput} autoCorrect={false}
-                    onChangeText={text => this._description = text} placeholder="Description"></TextInput>
+                <RegularInput autoCorrect={false}
+                    onChangeText={text => this._description = text} placeholder="Description"/>
 
                 {/* imageUrl */}
-                <TextInput style={styles.regularInput} autoCapitalize={'none'} autoCorrect={false}
-                    onChangeText={text => this._imageUrl = text} placeholder="Image URL"></TextInput>
+                <RegularInput autoCapitalize={'none'} autoCorrect={false}
+                    onChangeText={text => this._imageUrl = text} placeholder="Image URL"/>
 
                 <Button
                     color='#FABA30'
@@ -74,7 +75,7 @@ export default class NewUser extends Component {
                     title='SUBMIT'
                     onPress={() => this._handleButtonPress()} />
                 
-            </View>
+            </Wrapper>
         );
     }
 }
@@ -94,27 +95,26 @@ const mutation = graphql`
     }
 `;
 
-styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#508FF2',
-    },
-    title: {
-        fontWeight: '800',
-        fontSize: 30,
-        color: '#FFF',
-        marginBottom: 20,
-        marginTop: 20,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-    },
-    regularInput: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        backgroundColor: '#FFF',
-        margin: 20,
-        paddingLeft: 10,
-    },
-}
-)
+Wrapper = styled.View`
+    flex: 1;
+    backgroundColor: #508FF2;
+`
+Title = styled.Text`
+    fontWeight: 800;
+    fontSize: 30;
+    color: #FFF;
+    marginBottom: 20;
+    marginTop: 20;
+    marginLeft: auto;
+    marginRight: auto;
+`
+
+RegularInput = styled.TextInput`
+    height: 40;
+    borderColor: gray;
+    borderWidth: 1;
+    backgroundColor: #FFF;
+    marginVertical: 20;
+    marginHorizontal: 20;
+    paddingLeft: 10;
+`
