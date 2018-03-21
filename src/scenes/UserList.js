@@ -7,21 +7,39 @@ import environment from '@src/Environment';
 import RowItem from '@src/components/RowItem';
 import BpkSpinner from 'react-native-bpk-component-spinner';
 import NewUserButton from '@src/components/NewUserButton';
+import { ConnectionHandler } from 'relay-runtime';
 
 @withNavigation
 class UserList extends Component {
 
+    componentDidMount() {
+        this._subscribe();
+    }
+
     static navigationOptions = {title: 'List'};
 
     _subscribe = () => {
+        console.log('Subscribing!!!')
         requestSubscription(
             environment,
             {
                 subscription,
                 variables: {},
-                onCompleted: () => console.log('Subscription completed'),
-                updater: (proxyStore) => {
-                    console.log('Subscription updater')
+                updater: (store) => {
+
+                    // Get the notification
+                    const rootField = store.getRootField('UserAdded');
+                    const newUser = rootField.getLinkedRecord('userEdge').getLinkedRecord('node');
+
+                    // Add it to a connection
+                    const record = store.getRoot();
+                    const users = ConnectionHandler.getConnection(record, 'UserList_users');
+
+                    if(users) {
+                        const newEdge = ConnectionHandler.createEdge(store, users, newUser, 'UserEdge');
+                        ConnectionHandler.insertEdgeBefore(users, newEdge);
+                    }
+
                 }
         });
     }
@@ -84,7 +102,7 @@ const UserListQueryRenderer = () => {
         `}
         render={({error, props}) => {
             if (error) {
-                return <Text>{error}</Text>
+                return <View>{error}</View>
             } else if (props) {
                 // Expected path
                 return <UserListContainer query={props}/>
