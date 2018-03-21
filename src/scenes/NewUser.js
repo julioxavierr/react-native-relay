@@ -1,51 +1,17 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, ImageBackground } from 'react-native';
-import { graphql, commitMutation } from 'react-relay';
-import { ConnectionHandler } from 'relay-runtime';
-import environment from '@src/Environment';
 import styled from 'styled-components';
+import commitUserMutation from '../mutations/NewUserMutation';
 
 export default class NewUser extends Component {
 
-    _updateClientStore = (proxyStore) => {
-        // Retrieve the new user from server response
-        const registerUserField = proxyStore.getRootField('RegisterEmail');
-        const newUser = registerUserField.getLinkedRecord('user');
-
-        // Add the user to the store
-        const record = proxyStore.getRoot()
-        const users = ConnectionHandler.getConnection(record, 'UserList_users');
-
-        if(users) {
-            const newEdge = ConnectionHandler.createEdge(proxyStore, users, newUser, 'UserEdge');
-
-            // Insert edge before all other edges, like in server
-            ConnectionHandler.insertEdgeBefore(users, newEdge);
-        }
+    constructor(props) {
+        super(props)
+        this.state = {name: '', email: '', password: '', description: '', imageUrl: ''};
     }
-
-    _handleButtonPress = () => {
-
-        const variables = {
-            input: {
-                name: this._name,
-                email: this._mail,
-                password: '123456',
-                description: this._description,
-                imageUrl: this._imageUrl,
-            }
-        }
-
-        commitMutation(
-            environment,
-            {
-                mutation,
-                variables,
-                updater: (proxyStore) => this._updateClientStore(proxyStore),
-                onCompleted: () => this.props.navigation.goBack(),
-                onError: err => console.error(err)
-            },
-        );   
+    
+    commit = () => {
+        commitUserMutation(this.state, this.props.navigation.goBack());
     }
 
     render() {
@@ -54,46 +20,31 @@ export default class NewUser extends Component {
                 <Title>Create a new user</Title>
 
                 {/* name */}
-                <RegularInput autoCorrect={false} onChangeText={text => this._name = text} 
+                <RegularInput autoCorrect={false} onChangeText={text => this.setState({name: text})} 
                     placeholder="Name"/>
 
                 {/* email */}
                 <RegularInput autoCapitalize={'none'} autocorrect={false}
-                    onChangeText={text => this._mail = text} placeholder="E-mail"/>
+                    onChangeText={text => this.setState({email: text})} placeholder="E-mail"/>
 
                 {/* description */}
                 <RegularInput autoCorrect={false}
-                    onChangeText={text => this._description = text} placeholder="Description"/>
+                    onChangeText={text => this.setState({description: text})} placeholder="Description"/>
 
                 {/* imageUrl */}
                 <RegularInput autoCapitalize={'none'} autoCorrect={false}
-                    onChangeText={text => this._imageUrl = text} placeholder="Image URL"/>
+                    onChangeText={text => this.setState({imageUrl: text})} placeholder="Image URL"/>
 
                 <Button
                     color='#FABA30'
-                    icon={{name: 'check'}}
                     title='SUBMIT'
-                    onPress={() => this._handleButtonPress()} />
+                    onPress={() => this.commit()} />
                 
             </Wrapper>
         );
     }
 }
 
-const mutation = graphql`
-    mutation NewUserMutation($input: RegisterEmailInput!) {
-        RegisterEmail(input: $input) {
-            user {
-                id
-                name
-                email
-                description
-                imageUrl
-            }
-            token
-        }
-    }
-`;
 
 const Wrapper = styled.View`
     flex: 1;
