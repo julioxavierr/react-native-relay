@@ -95,11 +95,11 @@ const mutation = graphql`
     }
 `;
 
-Wrapper = styled.View`
+const Wrapper = styled.View`
     flex: 1;
     backgroundColor: #508FF2;
 `
-Title = styled.Text`
+const Title = styled.Text`
     fontWeight: 800;
     fontSize: 30;
     color: #FFF;
@@ -109,7 +109,7 @@ Title = styled.Text`
     marginRight: auto;
 `
 
-RegularInput = styled.TextInput`
+const RegularInput = styled.TextInput`
     height: 40;
     borderColor: gray;
     borderWidth: 1;

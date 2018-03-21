@@ -24,9 +24,9 @@ export default class RowItem extends Component {
 
 }
 
-Row = styled.TouchableHighlight`
+const Row = styled.TouchableHighlight`
     paddingHorizontal: 10;
-    paddingVertical: 10;
+    paddingVertical: 15;
     height: 120;
     borderColor: #000;
     marginVertical: 20;
@@ -36,14 +36,14 @@ Row = styled.TouchableHighlight`
     shadowColor: #000;
 `
 
-RowView = styled.View`
+const RowView = styled.View`
     flex: 1;
     flexDirection: row;
     justifyContent: center;
     alignItems: center;
 `
 
-Name = styled.Text`
+const Name = styled.Text`
     flex: 1;
     width: 250;
     height: 80;

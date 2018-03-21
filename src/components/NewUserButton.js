@@ -19,7 +19,7 @@ export default class NewUserButton extends Component {
 }
 
 const Touchable = styled.TouchableHighlight`
-    flex: 0.1;
+    flex: 0.2;
     backgroundColor: #AEB0B2;
     alignItems: center;
     justifyContent: center;
