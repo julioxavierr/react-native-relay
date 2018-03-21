@@ -16,7 +16,7 @@ export default class RowItem extends Component {
             <Row underlayColor='#CCC' onPress={() => this._onPress(data)}>
                 <RowView>
                     <Name adjustsFontSizeToFit={true}>{data.node.name}</Name>
-                    <Image source={require('../assets/arrow.png')}/>
+                    <Image source={require('./assets/arrow.png')}/>
                 </RowView>
             </Row>
         );
