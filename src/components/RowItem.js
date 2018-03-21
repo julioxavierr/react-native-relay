@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableHighlight, Image } from 'react-native';
+import styled from 'styled-components'
 
 export default class RowItem extends Component {
 
@@ -12,47 +13,42 @@ export default class RowItem extends Component {
         const data = this.props.data;
         
         return (
-            <TouchableHighlight style={styles.row} 
-                underlayColor='#EEE'
-                onPress={() => this._onPress(data)}>
-                <View style={styles.rowView}>
-                    <Text style={styles.rowText} adjustsFontSizeToFit={true}>{data.node.name}</Text>
+            <Row underlayColor='#CCC' onPress={() => this._onPress(data)}>
+                <RowView>
+                    <Name adjustsFontSizeToFit={true}>{data.node.name}</Name>
                     <Image source={require('../assets/arrow.png')}/>
-                </View>
-            </TouchableHighlight>
+                </RowView>
+            </Row>
         );
     }
 
 }
 
-const styles = StyleSheet.create({
-    row: {
-        padding: 10,
-        height: 120,
-        borderColor: '#000',
-        marginVertical: 20,
-        marginHorizontal: 35,
-        backgroundColor: '#FFF',
-        shadowOpacity: 0.15,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: -10,
-            heigth: -10
-        }
-    },
-    rowView: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    rowText: {
-        flex: 1,
-        width: 250,
-        height: 80,
-        fontSize: 30,
-        textAlign: 'left',
-        fontWeight: '800',
-        color: '#508FF2',
-    },
-})
+Row = styled.TouchableHighlight`
+    paddingHorizontal: 10;
+    paddingVertical: 10;
+    height: 120;
+    borderColor: #000;
+    marginVertical: 20;
+    marginHorizontal: 35;
+    backgroundColor: #FFF;
+    shadowOpacity: 0.8;
+    shadowColor: #000;
+`
+
+RowView = styled.View`
+    flex: 1;
+    flexDirection: row;
+    justifyContent: center;
+    alignItems: center;
+`
+
+Name = styled.Text`
+    flex: 1;
+    width: 250;
+    height: 80;
+    fontSize: 30;
+    textAlign: left;
+    fontWeight: 800;
+    color: #508FF2;
+`
