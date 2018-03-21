@@ -8,6 +8,7 @@ import RowItem from '@src/components/RowItem';
 import BpkSpinner from 'react-native-bpk-component-spinner';
 import NewUserButton from '@src/components/NewUserButton';
 import { ConnectionHandler } from 'relay-runtime';
+import styled from 'styled-components'
 
 @withNavigation
 class UserList extends Component {
@@ -47,16 +48,16 @@ class UserList extends Component {
     // Render a view including a FlatList that contains RowItem's 
     render() {
         this.navigation = this.props.navigation;
-        const users = this.props.query.users
+        const users = this.props.query.users;
 
         return (
-            <View style={styles.container}>
-                <FlatList style={{flex:1}}
-                    data={users.edges} keyExtractor={(item) => item.node.id}
+            <Wrapper>
+                <FlatList data={users.edges} 
+                    keyExtractor={(item) => item.node.id}
                     renderItem={({item}) => <RowItem data={item} navigation={this.navigation}/>}
                 />
                 <NewUserButton navigation={this.navigation}/>
-            </View>
+            </Wrapper>
         );
     }
 
@@ -108,17 +109,19 @@ const UserListQueryRenderer = () => {
                 return <UserListContainer query={props}/>
             } else {
                 // Display loading spinner
-                return <BpkSpinner style={styles.container} type="light" />
+                return (
+                    <Wrapper>
+                        <BpkSpinner type="light" />
+                    </Wrapper>
+                )
             }
         }}/>)
 }
 
 export default hoistStatics(UserListQueryRenderer, UserList);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#508FF2',
-    justifyContent: 'center'
-  },
-})
+const Wrapper = styled.View`
+    flex: 1;
+    backgroundColor: #508FF2;
+    justifyContent: center;
+`
