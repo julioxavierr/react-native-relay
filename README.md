@@ -13,12 +13,13 @@
 - [x] use [Relay Modern]
 - [x] retrieve the data from the server and display it inside a FlatList
 - [x] design
-- [ ] fastlane
 - [x] [own GraphQL server]
 - [x] [storybook] with components
 - [x] register user mutation
 - [x] relay subscriptions
-
+- [x] eslint
+- [x] prettier
+- [x] precommit
 
 [storybook]: https://github.com/storybooks/storybook
 [jest]: https://jest-everywhere.now.sh
