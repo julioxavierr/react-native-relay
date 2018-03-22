@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableHighlight, Image } from 'react-native';
+import { View, Text, TouchableHighlight, Image } from 'react-native';
 import styled from 'styled-components'
 
 export default class RowItem extends Component {

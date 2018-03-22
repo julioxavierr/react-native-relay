@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, FlatList, View, Text, TouchableHighlight } from 'react-native';
+import { FlatList, View, Text, TouchableHighlight } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import UserList from './scenes/UserList';
 import User from './scenes/User';

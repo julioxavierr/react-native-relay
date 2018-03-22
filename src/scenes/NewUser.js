@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, ImageBackground } from 'react-native';
+import { View, Text, TextInput, Button, ImageBackground } from 'react-native';
 import styled from 'styled-components';
 import commitUserMutation from '../mutations/NewUserMutation';
 import Wrapper from '@src/components/Wrapper';
@@ -51,6 +51,7 @@ const Title = styled.Text`
     fontSize: 30;
     color: #FFF;
     marginBottom: 20;
+    marginTop: 20;
     marginLeft: auto;
     marginRight: auto;
 `

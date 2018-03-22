@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, FlatList, View, Text, TouchableHighlight } from 'react-native';
+import { FlatList, View, Text, TouchableHighlight } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { createFragmentContainer, graphql, QueryRenderer, requestSubscription } from 'react-relay';
 import hoistStatics from 'hoist-non-react-statics';
