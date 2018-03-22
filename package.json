@@ -19,6 +19,9 @@
     "eslint-plugin-react": "^7.7.0",
     "flow-bin": "^0.68.0",
     "jest-react-native": "^18.0.0",
+    "lint-staged": "^7.0.0",
+    "pre-commit": "^1.2.2",
+    "prettier": "1.11.1",
     "prop-types": "^15.6.1",
     "react-dom": "16.2.0",
     "react-test-renderer": "16.2.0",
@@ -32,11 +35,20 @@
     "test:watch": "jest --watch",
     "relay": "relay-compiler --schema data/schema.graphql --src src/",
     "storybook": "storybook start -p 7007",
-    "eslint": "eslint src"
+    "lint": "eslint src",
+    "lint:staged": "lint-staged",
+    "prettier": "prettier --single-quote true --trailing-comma all --print-width 80 --write src/**/*.js"
   },
   "jest": {
     "preset": "react-native"
   },
+  "lint-staged": {
+    "src/**/*.js": [
+      "prettier --single-quote true --trailing-comma all --print-width 80 --write",
+      "git add"
+    ]
+  },
+  "pre-commit": "lint:staged",
   "dependencies": {
     "babel-eslint": "^8.2.2",
     "babel-preset-react-native-stage-0": "^1.0.1",
