@@ -17,6 +17,7 @@
 - [x] [own GraphQL server]
 - [x] [storybook] with components
 - [x] register user mutation
+- [x] relay subscriptions
 
 
 [storybook]: https://github.com/storybooks/storybook

@@ -12,6 +12,11 @@
     "babel-plugin-relay": "dev",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native": "1.9.2",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
     "flow-bin": "^0.68.0",
     "jest-react-native": "^18.0.0",
     "prop-types": "^15.6.1",
@@ -26,13 +31,17 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "relay": "relay-compiler --schema data/schema.graphql --src src/",
-    "storybook": "storybook start -p 7007"
+    "storybook": "storybook start -p 7007",
+    "eslint": "eslint src"
   },
   "jest": {
     "preset": "react-native"
   },
   "dependencies": {
+    "babel-eslint": "^8.2.2",
     "babel-preset-react-native-stage-0": "^1.0.1",
+    "eslint-plugin-flowtype": "^2.46.1",
+    "eslint-plugin-react-native": "^3.2.1",
     "hoist-non-react-statics": "^2.5.0",
     "react": "16.2.0",
     "react-native": "0.52.0",
