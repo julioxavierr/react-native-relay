@@ -34,16 +34,16 @@ const updateClientStore = (proxyStore) => {
     }
 }
 
-const commitUserMutation = (user, callback) => {
+const commitUserMutation = (user) => {
 
-    const variables = {input: user}
+    const variables = { input: user }
     commitMutation(
         environment,
         {
             mutation,
             variables,
-            updater: (store) => updateClientStore(store),
-            onError: err => console.error(err)
+            updater: (proxyStore) => updateClientStore(proxyStore),
+            onError: err => console.error(err),
         },
     );
 }
