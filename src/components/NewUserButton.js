@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Text, TouchableHighlight } from 'react-native';
 import styled from 'styled-components';
 
 export default class NewUserButton extends Component {

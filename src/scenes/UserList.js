@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import { FlatList, View, Text, TouchableHighlight } from 'react-native';
+import React, { Component } from 'react';
+import { View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { createFragmentContainer, graphql, QueryRenderer, requestSubscription } from 'react-relay';
 import hoistStatics from 'hoist-non-react-statics';
@@ -15,13 +15,12 @@ import Wrapper from '@src/components/Wrapper';
 class UserList extends Component {
 
     componentDidMount() {
-        this._subscribe();
+        // this._subscribe();
     }
 
-    static navigationOptions = {title: 'List'};
+    static navigationOptions = { title: 'List' };
 
     _subscribe = () => {
-        console.log('Subscribing!!!')
         requestSubscription(
             environment,
             {
@@ -42,7 +41,7 @@ class UserList extends Component {
                         ConnectionHandler.insertEdgeBefore(users, newEdge);
                     }
 
-                }
+                },
         });
     }
 
@@ -51,12 +50,12 @@ class UserList extends Component {
         this.navigation = this.props.navigation;
         const users = this.props.query.users;
 
-        rowItem = (item) => <RowItem data={item} navigation={this.navigation}/>;
+        const rowItem = (item) => <RowItem data={item} navigation={this.navigation}/>;
 
         return (
             <Wrapper>
                 <List data={users.edges} keyExtractor={(item) => item.node.id}
-                    renderItem={({item}) => rowItem(item)}
+                    renderItem={({ item }) => rowItem(item)}
                 />
                 <NewUserButton navigation={this.navigation}/>
             </Wrapper>
@@ -103,7 +102,7 @@ const UserListQueryRenderer = () => {
                 ...UserList_query
             }
         `}
-        render={({error, props}) => {
+        render={({ error, props }) => {
             if (error) {
                 return <View>{error}</View>
             } else if (props) {

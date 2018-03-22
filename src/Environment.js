@@ -1,13 +1,13 @@
-import {Environment, Network, RecordSource, Store} from 'relay-runtime';
-import {SubscriptionClient} from 'subscriptions-transport-ws'
+import { Environment, Network, RecordSource, Store } from 'relay-runtime';
+import { SubscriptionClient } from 'subscriptions-transport-ws'
 import 'whatwg-fetch'
 
   const store = new Store(new RecordSource());
 
   const setupSubscription = (config, variables, cacheConfig, observer) => {
     const query = config.text
-    const subscriptionClient = new SubscriptionClient('ws://localhost:5000/subscriptions', {reconnect: true})
-    console.log("subscriptionClient = ", subscriptionClient)
+    const subscriptionClient = new SubscriptionClient('ws://localhost:5000/subscriptions', { reconnect: true })
+    
     const onNext = (result) => {
       observer.onNext(result)
     }
@@ -19,7 +19,7 @@ import 'whatwg-fetch'
     }
   
     const client = subscriptionClient
-      .request({query, variables})
+      .request({ query, variables })
       .subscribe(onNext, onError, onComplete)
   
     // Return a dispose method to be able to unsubscribe and trigger closing the
@@ -29,7 +29,7 @@ import 'whatwg-fetch'
         // unsubscribe and close this socket connection
         client.unsubscribe()
         subscriptionClient.close()
-      }
+      },
     }
   }
 
@@ -39,7 +39,7 @@ import 'whatwg-fetch'
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         query: operation.text,

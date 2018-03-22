@@ -1,27 +1,26 @@
-import React, {Component} from 'react';
-import { View, Text, Button, Alert, ImageBackground} from 'react-native';
-import { createFragmentContainer, graphql, QueryRenderer, requestSubscription } from 'react-relay';
-import hoistStatics from 'hoist-non-react-statics';
+import React, { Component } from 'react';
+import { View } from 'react-native';
+import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
 import environment from '@src/Environment';
 import BpkSpinner from 'react-native-bpk-component-spinner';
 import Wrapper from '@src/components/Wrapper';
 import styled from 'styled-components';
 
 class User extends Component {
-    static navigationOptions = {title: 'Detail'};
+    static navigationOptions = { title: 'Detail' };
 
     constructor(){
         super();
 
         // Default infos for user
-        this.state = {name: '', imageUrl: 'http://bit.ly/2uPNgUB', description: ''}
+        this.state = { name: '', imageUrl: 'http://bit.ly/2uPNgUB', description: '' }
     }
 
     componentDidMount(){
         const user = this.props.user;
 
         // Set user state using query data
-        this.setState({name: user.name, imageUrl: user.imageUrl, description: user.description});
+        this.setState({ name: user.name, imageUrl: user.imageUrl, description: user.description });
     }
 
     render() {
@@ -29,14 +28,14 @@ class User extends Component {
         
         return (
             <Wrapper>
-                <UserImage source={{uri: info.imageUrl}}>
+                <UserImage source={{ uri: info.imageUrl }}>
                     <ImageCaptionBackground>
                         <ImageCaption>{info.name}</ImageCaption>
                     </ImageCaptionBackground>
                 </UserImage>
                 <UserInfoWrapper>
                     <Title>Position:</Title>
-                    <Description style={{fontWeight: '600', fontSize: 25, color: 'white'}}>{info.description}</Description>
+                    <Description>{info.description}</Description>
                 </UserInfoWrapper>
             </Wrapper>
         );
@@ -61,9 +60,12 @@ const UserQueryRenderer = ({ navigation }) => {
                         ...User_user
                     }
                 }`} 
-            variables={{id: navigation.state.params.id}}
-            render={({error, props}) => {
-                if (props) {
+            variables={{ id: navigation.state.params.id }}
+            render={({ error, props }) => {
+
+                if (error) {
+                    return <View>{error}</View>
+                } else if (props) {
                     return <UserContainer user={props.node} />
                 }
 

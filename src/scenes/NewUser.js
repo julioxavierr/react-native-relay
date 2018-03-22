@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, Button, ImageBackground } from 'react-native';
+import { Button } from 'react-native';
 import styled from 'styled-components';
 import commitUserMutation from '../mutations/NewUserMutation';
 import Wrapper from '@src/components/Wrapper';
@@ -8,7 +8,7 @@ export default class NewUser extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {name: '', email: '', password: '', description: '', imageUrl: ''};
+        this.state = { name: '', email: '', password: '', description: '', imageUrl: '' };
     }
     
     commit = () => {
@@ -21,20 +21,20 @@ export default class NewUser extends Component {
                 <Title>Create a new user</Title>
 
                 {/* name */}
-                <RegularInput autoCorrect={false} onChangeText={text => this.setState({name: text})} 
+                <RegularInput autoCorrect={false} onChangeText={text => this.setState({ name: text })} 
                     placeholder="Name"/>
 
                 {/* email */}
                 <RegularInput autoCapitalize={'none'} autocorrect={false}
-                    onChangeText={text => this.setState({email: text})} placeholder="E-mail"/>
+                    onChangeText={text => this.setState({ email: text })} placeholder="E-mail"/>
 
                 {/* description */}
                 <RegularInput autoCorrect={false}
-                    onChangeText={text => this.setState({description: text})} placeholder="Description"/>
+                    onChangeText={text => this.setState({ description: text })} placeholder="Description"/>
 
                 {/* imageUrl */}
                 <RegularInput autoCapitalize={'none'} autoCorrect={false}
-                    onChangeText={text => this.setState({imageUrl: text})} placeholder="Image URL"/>
+                    onChangeText={text => this.setState({ imageUrl: text })} placeholder="Image URL"/>
 
                 <Button
                     color='#FABA30'
