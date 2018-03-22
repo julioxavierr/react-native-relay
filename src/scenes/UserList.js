@@ -9,6 +9,7 @@ import BpkSpinner from 'react-native-bpk-component-spinner';
 import NewUserButton from '@src/components/NewUserButton';
 import { ConnectionHandler } from 'relay-runtime';
 import styled from 'styled-components'
+import Wrapper from '@src/components/Wrapper';
 
 @withNavigation
 class UserList extends Component {
@@ -50,11 +51,12 @@ class UserList extends Component {
         this.navigation = this.props.navigation;
         const users = this.props.query.users;
 
+        rowItem = (item) => <RowItem data={item} navigation={this.navigation}/>;
+
         return (
             <Wrapper>
-                <FlatList data={users.edges} 
-                    keyExtractor={(item) => item.node.id}
-                    renderItem={({item}) => <RowItem data={item} navigation={this.navigation}/>}
+                <List data={users.edges} keyExtractor={(item) => item.node.id}
+                    renderItem={({item}) => rowItem(item)}
                 />
                 <NewUserButton navigation={this.navigation}/>
             </Wrapper>
@@ -120,8 +122,6 @@ const UserListQueryRenderer = () => {
 
 export default hoistStatics(UserListQueryRenderer, UserList);
 
-const Wrapper = styled.View`
+const List = styled.FlatList`
     flex: 1;
-    backgroundColor: #508FF2;
-    justifyContent: center;
 `

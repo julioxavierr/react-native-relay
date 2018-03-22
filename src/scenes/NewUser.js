@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, ImageBackground } from 'react-native';
 import styled from 'styled-components';
 import commitUserMutation from '../mutations/NewUserMutation';
+import Wrapper from '@src/components/Wrapper';
 
 export default class NewUser extends Component {
 
@@ -45,17 +46,11 @@ export default class NewUser extends Component {
     }
 }
 
-
-const Wrapper = styled.View`
-    flex: 1;
-    backgroundColor: #508FF2;
-`
 const Title = styled.Text`
     fontWeight: 800;
     fontSize: 30;
     color: #FFF;
     marginBottom: 20;
-    marginTop: 20;
     marginLeft: auto;
     marginRight: auto;
 `
