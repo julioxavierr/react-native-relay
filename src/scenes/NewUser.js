@@ -1,120 +1,82 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, ImageBackground } from 'react-native';
-import { graphql, commitMutation } from 'react-relay';
-import { ConnectionHandler } from 'relay-runtime';
-import environment from '@src/Environment';
+import { Button } from 'react-native';
+import styled from 'styled-components';
+import commitUserMutation from '../mutations/NewUserMutation';
+import Wrapper from '@src/components/Wrapper';
 
 export default class NewUser extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      email: '',
+      password: '',
+      description: '',
+      imageUrl: '',
+    };
+  }
 
-    _updateClientStore = (proxyStore) => {
-        // Retrieve the new user from server response
-        const registerUserField = proxyStore.getRootField('RegisterEmail');
-        const newUser = registerUserField.getLinkedRecord('user');
+  commit = () => {
+    commitUserMutation(this.state, this.props.navigation.goBack());
+  };
 
-        // Add the user to the store
-        const record = proxyStore.getRoot()
-        const users = ConnectionHandler.getConnection(record, 'UserList_users');
+  render() {
+    return (
+      <Wrapper>
+        <Title>Create a new user</Title>
 
-        if(users) {
-            const newEdge = ConnectionHandler.createEdge(proxyStore, users, newUser, 'UserEdge');
+        {/* name */}
+        <RegularInput
+          autoCorrect={false}
+          onChangeText={text => this.setState({ name: text })}
+          placeholder="Name"
+        />
 
-            // Insert edge before all other edges, like in server
-            ConnectionHandler.insertEdgeBefore(users, newEdge);
-        }
-    }
+        {/* email */}
+        <RegularInput
+          autoCapitalize={'none'}
+          autocorrect={false}
+          onChangeText={text => this.setState({ email: text })}
+          placeholder="E-mail"
+        />
 
-    _handleButtonPress = () => {
+        {/* description */}
+        <RegularInput
+          autoCorrect={false}
+          onChangeText={text => this.setState({ description: text })}
+          placeholder="Description"
+        />
 
-        const variables = {
-            input: {
-                name: this._name,
-                email: this._mail,
-                password: '123456',
-                description: this._description,
-                imageUrl: this._imageUrl,
-            }
-        }
+        {/* imageUrl */}
+        <RegularInput
+          autoCapitalize={'none'}
+          autoCorrect={false}
+          onChangeText={text => this.setState({ imageUrl: text })}
+          placeholder="Image URL"
+        />
 
-        commitMutation(
-            environment,
-            {
-                mutation,
-                variables,
-                updater: (proxyStore) => this._updateClientStore(proxyStore),
-                onCompleted: () => this.props.navigation.goBack(),
-                onError: err => console.error(err)
-            },
-        );   
-    }
-
-    render() {
-        return (
-            <View style={styles.container} >
-                <Text style={styles.title}>Create a new user</Text>
-
-                {/* name */}
-                <TextInput style={styles.regularInput} autoCorrect={false}
-                    onChangeText={text => this._name = text} placeholder="Name"></TextInput>
-
-                {/* email */}
-                <TextInput style={styles.regularInput} autoCapitalize={'none'} autocorrect={false}
-                onChangeText={text => this._mail = text} placeholder="E-mail"></TextInput>
-
-                {/* description */}
-                <TextInput style={styles.regularInput} autoCorrect={false}
-                    onChangeText={text => this._description = text} placeholder="Description"></TextInput>
-
-                {/* imageUrl */}
-                <TextInput style={styles.regularInput} autoCapitalize={'none'} autoCorrect={false}
-                    onChangeText={text => this._imageUrl = text} placeholder="Image URL"></TextInput>
-
-                <Button
-                    color='#FABA30'
-                    icon={{name: 'check'}}
-                    title='SUBMIT'
-                    onPress={() => this._handleButtonPress()} />
-                
-            </View>
-        );
-    }
+        <Button color="#FABA30" title="SUBMIT" onPress={() => this.commit()} />
+      </Wrapper>
+    );
+  }
 }
 
-const mutation = graphql`
-    mutation NewUserMutation($input: RegisterEmailInput!) {
-        RegisterEmail(input: $input) {
-            user {
-                id
-                name
-                email
-                description
-                imageUrl
-            }
-            token
-        }
-    }
+const Title = styled.Text`
+  font-weight: 800;
+  font-size: 30;
+  color: #fff;
+  margin-bottom: 20;
+  margin-top: 20;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
-styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#508FF2',
-    },
-    title: {
-        fontWeight: '800',
-        fontSize: 30,
-        color: '#FFF',
-        marginBottom: 20,
-        marginTop: 20,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-    },
-    regularInput: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        backgroundColor: '#FFF',
-        margin: 20,
-        paddingLeft: 10,
-    },
-}
-)
+const RegularInput = styled.TextInput`
+  height: 40;
+  border-color: gray;
+  border-width: 1;
+  background-color: #fff;
+  margin-vertical: 20;
+  margin-horizontal: 20;
+  padding-left: 10;
+`;
