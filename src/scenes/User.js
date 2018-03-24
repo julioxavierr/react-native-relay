@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
-import environment from '@src/Environment';
-import BpkSpinner from 'react-native-bpk-component-spinner';
+import { graphql } from 'react-relay';
 import Wrapper from '@src/components/Wrapper';
 import styled from 'styled-components';
+import createQueryRenderer from '../createQueryRenderer';
 
 class User extends Component {
   static navigationOptions = { title: 'Detail' };
@@ -21,7 +19,7 @@ class User extends Component {
   }
 
   componentDidMount() {
-    const user = this.props.user;
+    const user = this.props.query.node;
 
     // Set user state using query data
     this.setState({
@@ -49,47 +47,6 @@ class User extends Component {
     );
   }
 }
-
-const UserContainer = createFragmentContainer(
-  User,
-  graphql`
-    fragment User_user on User {
-      id
-      name
-      description
-      imageUrl
-    }
-  `,
-);
-
-const UserQueryRenderer = ({ navigation }) => {
-  return (
-    <QueryRenderer
-      environment={environment}
-      query={graphql`
-        query UserQuery($id: ID!) {
-          node(id: $id) {
-            ...User_user
-          }
-        }
-      `}
-      variables={{ id: navigation.state.params.id }}
-      render={({ error, props }) => {
-        if (error) {
-          return <View>{error}</View>;
-        } else if (props) {
-          return <UserContainer user={props.node} />;
-        }
-
-        return (
-          <Wrapper>
-            <BpkSpinner type="light" />
-          </Wrapper>
-        );
-      }}
-    />
-  );
-};
 
 const UserImage = styled.ImageBackground`
   flex: 3;
@@ -127,5 +84,27 @@ const Description = styled.Text`
   font-size: 25;
   color: white;
 `;
+
+const fragment = graphql`
+  fragment User_query on User {
+    id
+    name
+    description
+    imageUrl
+  }
+`;
+
+const query = graphql`
+  query UserQuery($id: ID!) {
+    node(id: $id) {
+      ...User_query
+    }
+  }
+`;
+
+const UserQueryRenderer = ({ navigation }) => {
+  const params = { id: navigation.state.params.id };
+  return createQueryRenderer(fragment, User, query, params);
+};
 
 export default UserQueryRenderer;
