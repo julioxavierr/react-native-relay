@@ -5,12 +5,7 @@ import { View } from 'react-native';
 import BpkSpinner from 'react-native-bpk-component-spinner';
 import Wrapper from '@src/components/Wrapper';
 
-function createQueryRenderer(
-  fragment,
-  WrappedComponent,
-  query,
-  variables = {},
-) {
+function createQueryRenderer(fragment, WrappedComponent, query) {
   return class extends Component {
     constructor(props) {
       super(props);
@@ -23,7 +18,6 @@ function createQueryRenderer(
         <QueryRenderer
           environment={environment}
           query={query}
-          variables={variables}
           render={({ error, props }) => {
             if (error) {
               return <View>{error}</View>;
