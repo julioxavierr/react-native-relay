@@ -41,51 +41,26 @@ class UserList extends Component {
   }
 }
 
-// Get the last 20 users names using GraphQL
-// and provide info to User_user
-const UserListContainer = createFragmentContainer(
-  UserList,
-  graphql`
-    fragment UserList_query on Query {
-      users(last: 20) @connection(key: "UserList_users") {
-        edges {
-          node {
-            id
-            name
-          }
+const query = graphql`
+  query UserListQuery {
+    ...UserList_query
+  }
+`;
+
+const fragment = graphql`
+  fragment UserList_query on Query {
+    users(last: 20) @connection(key: "UserList_users") {
+      edges {
+        node {
+          id
+          name
         }
       }
     }
-  `,
-);
+  }
+`;
 
-const UserListQueryRenderer = () => {
-  return (
-    <QueryRenderer
-      environment={environment}
-      query={graphql`
-        query UserListQuery {
-          ...UserList_query
-        }
-      `}
-      render={({ error, props }) => {
-        if (error) {
-          return <View>{error}</View>;
-        } else if (props) {
-          // Expected path
-          return <UserListContainer query={props} />;
-        } else {
-          // Display loading spinner
-          return (
-            <Wrapper>
-              <BpkSpinner type="light" />
-            </Wrapper>
-          );
-        }
-      }}
-    />
-  );
-};
+const UserListQueryRenderer = createQueryRenderer(fragment, UserList, query);
 
 export default hoistStatics(UserListQueryRenderer, UserList);
 
