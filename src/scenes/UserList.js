@@ -1,57 +1,23 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import {
-  createFragmentContainer,
-  graphql,
-  QueryRenderer,
-  requestSubscription,
-} from 'react-relay';
+import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
 import hoistStatics from 'hoist-non-react-statics';
 import environment from '@src/Environment';
 import RowItem from '@src/components/RowItem';
 import BpkSpinner from 'react-native-bpk-component-spinner';
 import NewUserButton from '@src/components/NewUserButton';
-import { ConnectionHandler } from 'relay-runtime';
 import styled from 'styled-components';
 import Wrapper from '@src/components/Wrapper';
-import createQueryRenderer from '../createQueryRenderer';
+import subscribe from '../subscriptions/UserSubscription';
 
 @withNavigation
 class UserList extends Component {
   componentDidMount() {
-    // this._subscribe();
+    subscribe();
   }
 
   static navigationOptions = { title: 'List' };
-
-  _subscribe = () => {
-    requestSubscription(environment, {
-      subscription,
-      variables: {},
-      updater: store => {
-        // Get the notification
-        const rootField = store.getRootField('UserAdded');
-        const newUser = rootField
-          .getLinkedRecord('userEdge')
-          .getLinkedRecord('node');
-
-        // Add it to a connection
-        const record = store.getRoot();
-        const users = ConnectionHandler.getConnection(record, 'UserList_users');
-
-        if (users) {
-          const newEdge = ConnectionHandler.createEdge(
-            store,
-            users,
-            newUser,
-            'UserEdge',
-          );
-          ConnectionHandler.insertEdgeBefore(users, newEdge);
-        }
-      },
-    });
-  };
 
   // Render a view including a FlatList that contains RowItem's
   render() {
@@ -74,22 +40,6 @@ class UserList extends Component {
     );
   }
 }
-
-const subscription = graphql`
-  subscription UserListSubscription {
-    UserAdded {
-      userEdge {
-        node {
-          id
-          name
-          email
-          description
-          imageUrl
-        }
-      }
-    }
-  }
-`;
 
 const query = graphql`
   query UserListQuery {
