@@ -25,4 +25,4 @@
 [jest]: https://jest-everywhere.now.sh
 [GraphQL]: graphql.org/
 [Relay Modern]: https://facebook.github.io/relay/
-[own GraphQL server]: https://github.com/julioxavierr/entria-server
+[own GraphQL server]: https://github.com/julioxavierr/graphql-dataloader-server
